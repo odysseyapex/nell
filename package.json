@@ -1,8 +1,8 @@
 {
-  "name": "nell",
+  "name": "nellvia",
   "version": "0.1.0",
   "private": true,
-  "description": "Nell — behavioral follow-through intelligence platform for coaches",
+  "description": "Nellvia — behavioural follow-through intelligence platform for coaches",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
