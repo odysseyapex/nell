@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Nell's design language: calm, analytical, premium, human.
+ *
+ * The palette is deliberately quiet. Nell is read by a coach who is about to
+ * have a difficult conversation with someone, and by a client who may have
+ * just recorded a week that did not go well. Nothing here celebrates, scolds,
+ * or gamifies. Colour is reserved almost entirely for signal.
+ */
+
+@layer base {
+  :root {
+    --background: 40 20% 99%;
+    --foreground: 222 24% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 24% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 24% 12%;
+
+    --primary: 222 30% 16%;
+    --primary-foreground: 40 20% 99%;
+
+    --secondary: 220 16% 95%;
+    --secondary-foreground: 222 24% 18%;
+
+    --muted: 220 16% 95%;
+    --muted-foreground: 220 10% 44%;
+
+    --accent: 220 16% 95%;
+    --accent-foreground: 222 24% 18%;
+
+    --destructive: 0 62% 46%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 14% 90%;
+    --input: 220 14% 88%;
+    --ring: 222 24% 30%;
+
+    /* Signal colours. Muted on purpose — attention, not alarm. */
+    --signal-stable: 158 40% 34%;
+    --signal-watch: 36 72% 42%;
+    --signal-attention: 12 62% 48%;
+
+    /* Overridden per organization from their branding settings. */
+    --brand: #1f2937;
+    --brand-foreground: #ffffff;
+    --brand-soft: rgba(31, 41, 55, 0.08);
+
+    --radius: 0.65rem;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  /* Numbers in metrics should align in columns rather than dance. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /*
+   * The measurement type scale. A follow-through figure is the single most
+   * important thing on a coach's screen, so it gets its own treatment rather
+   * than being another bold paragraph.
+   */
+  .metric-value {
+    @apply text-3xl font-semibold tracking-tight tabular;
+  }
+
+  .metric-label {
+    @apply text-xs font-medium uppercase tracking-wider text-muted-foreground;
+  }
+
+  .surface {
+    @apply rounded-xl border border-border bg-card shadow-sm;
+  }
+
+  /* Evidence blocks: always visually distinct from conclusions. */
+  .evidence {
+    @apply rounded-lg border border-border/70 bg-muted/40 px-4 py-3 text-sm text-muted-foreground;
+  }
+}
+
+/* Respect the reader who does not want motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
