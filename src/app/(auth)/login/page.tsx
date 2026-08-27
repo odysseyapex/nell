@@ -16,7 +16,7 @@ export default async function LoginPage({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-xl">Sign in to Nell</CardTitle>
+        <CardTitle className="text-xl">Sign in to Nellvia</CardTitle>
         <CardDescription>Coaches and clients use the same door.</CardDescription>
       </CardHeader>
       <CardContent>

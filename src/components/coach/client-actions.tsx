@@ -183,7 +183,7 @@ export function StartExperimentDialog({
         <DialogHeader>
           <DialogTitle>Start an experiment</DialogTitle>
           <DialogDescription>
-            Nell records today&apos;s follow-through as the baseline and measures the same figure over the
+            Nellvia records today&apos;s follow-through as the baseline and measures the same figure over the
             same length of window when you close it.
           </DialogDescription>
         </DialogHeader>

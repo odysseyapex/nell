@@ -1,5 +1,5 @@
 -- ============================================================================
--- Nell 0005 — Organization AI settings, invitations, audit log, AI usage
+-- Nellvia 0005 — Organization AI settings, invitations, audit log, AI usage
 -- ============================================================================
 
 do $$ begin
@@ -7,7 +7,7 @@ do $$ begin
 exception when duplicate_object then null; end $$;
 
 -- --------------------------------------------------------------------------
--- organization_ai_settings — how Nell is allowed to talk about this org's
+-- organization_ai_settings — how Nellvia is allowed to talk about this org's
 -- clients. Injected into every model call for the organization.
 -- --------------------------------------------------------------------------
 create table if not exists public.organization_ai_settings (

@@ -14,7 +14,7 @@ import { type Plan, formatPrice } from '@/lib/billing/plans';
  * Plan selection.
  *
  * Checkout is started server-side and the browser is redirected to Stripe —
- * no card details ever touch Nell.
+ * no card details ever touch Nellvia.
  */
 export function BillingPlans({
   plans,

@@ -4,7 +4,7 @@
  * Lives outside the server-actions module because a 'use server' file may only
  * export async functions — a plain constant there fails the build.
  *
- * The order is intentional: a coach describes their own method before Nell
+ * The order is intentional: a coach describes their own method before Nellvia
  * asks them to invite anyone. A framework built after the first client has
  * already started is a framework that gets abandoned.
  */

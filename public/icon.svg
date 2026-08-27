@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Nell">
-  <rect width="64" height="64" rx="14" fill="#1f2937"/>
-  <path d="M20 44V20l24 24V20" fill="none" stroke="#fbfaf9" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Nellvia">
+  <rect width="64" height="64" rx="15" fill="#0F172A"/>
+  <path d="M18 32C24 16 40 48 46 32" stroke="#FBFAF9" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <circle cx="18" cy="32" r="6" fill="#0F172A" stroke="#FBFAF9" stroke-width="4"/>
+  <circle cx="46" cy="32" r="6" fill="#FBFAF9"/>
 </svg>

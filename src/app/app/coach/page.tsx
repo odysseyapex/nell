@@ -19,7 +19,7 @@ export const dynamic = 'force-dynamic';
  * The coach dashboard.
  *
  * Ordered by one question: who needs me? Attention comes first and the
- * roster-wide numbers come second, because a coach opening Nell on a Monday
+ * roster-wide numbers come second, because a coach opening Nellvia on a Monday
  * morning is deciding where to spend the next hour, not admiring aggregates.
  */
 export default async function CoachDashboardPage() {
@@ -88,7 +88,7 @@ export default async function CoachDashboardPage() {
               title="No one needs chasing today"
               description={
                 roster.length === 0
-                  ? 'Once you invite clients and they start recording commitments, this is where Nell tells you who to look at first.'
+                  ? 'Once you invite clients and they start recording commitments, this is where Nellvia tells you who to look at first.'
                   : 'Every client is inside their normal range on follow-through, engagement and check-ins.'
               }
               action={

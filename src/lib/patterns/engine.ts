@@ -1,7 +1,7 @@
 /**
  * Deterministic pattern detection.
  *
- * Every pattern Nell shows a coach starts life here, as counted rows and a
+ * Every pattern Nellvia shows a coach starts life here, as counted rows and a
  * threshold — never as a model's impression. The AI layer may later rewrite the
  * description in the organization's voice, but it cannot invent a pattern, and
  * it cannot change the numbers.

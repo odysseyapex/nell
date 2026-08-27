@@ -19,7 +19,7 @@ export const dynamic = 'force-dynamic';
  * Every experiment across the coach's roster.
  *
  * This is the screen that answers "did anything I tried actually work?" — the
- * question a coach can rarely answer from memory, and the reason Nell records
+ * question a coach can rarely answer from memory, and the reason Nellvia records
  * a baseline at the moment an experiment starts rather than reconstructing one
  * afterwards.
  */
@@ -153,7 +153,7 @@ export default async function ExperimentsPage() {
         <div className="mt-8">
           <EmptyState
             title="No experiments yet"
-            description="Open a client, find a pattern, and turn it into something testable. Nell records the baseline and measures the result."
+            description="Open a client, find a pattern, and turn it into something testable. Nellvia records the baseline and measures the result."
           />
         </div>
       ) : (

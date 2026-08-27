@@ -14,7 +14,7 @@ export const metadata: Metadata = { title: 'Demo workspace' };
 export const dynamic = 'force-dynamic';
 
 /**
- * Development harness: pick whose eyes to see Nell through.
+ * Development harness: pick whose eyes to see Nellvia through.
  *
  * Only reachable when NELL_DEMO_MODE=1 — otherwise this route does not exist.
  * There is no password because there is no auth: the cookie names a demo
@@ -31,7 +31,7 @@ export default async function DemoPage() {
 
     const store = await cookies();
     store.set(DEMO_COOKIE, authUserId, { httpOnly: true, sameSite: 'lax', path: '/' });
-    redirect(authUserId === 'auth-coach-claire' ? '/app/coach' : '/app/today');
+    redirect(authUserId === 'auth-coach-claire' ? '/app/coach' : '/app/client');
   }
 
   return (

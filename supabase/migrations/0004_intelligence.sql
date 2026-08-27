@@ -1,5 +1,5 @@
 -- ============================================================================
--- Nell 0004 — Intelligence layer
+-- Nellvia 0004 — Intelligence layer
 --
 -- Patterns, alerts, risk snapshots, coaching briefs, experiments, coach notes.
 -- Everything here stores *evidence* alongside the conclusion: no number ever

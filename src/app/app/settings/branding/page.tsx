@@ -14,7 +14,7 @@ export default async function BrandingSettingsPage() {
       <div>
         <h2 className="text-lg font-semibold tracking-tight">Branding</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Applied everywhere your clients see Nell, including invitation emails.
+          Applied everywhere your clients see Nellvia, including invitation emails.
         </p>
       </div>
 

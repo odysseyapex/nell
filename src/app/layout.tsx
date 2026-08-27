@@ -7,13 +7,13 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Nell — know which clients need you before they tell you',
-    template: '%s · Nell',
+    default: 'Nellvia — know which clients need you before they tell you',
+    template: '%s · Nellvia',
   },
   description:
-    'Nell captures what clients commit to, compares it with what actually happens, identifies the patterns behind missed commitments, and shows coaches where intervention matters.',
+    'Nellvia captures what clients commit to, compares it with what actually happens, identifies the patterns behind missed commitments, and shows coaches where intervention matters.',
   manifest: '/manifest.webmanifest',
-  appleWebApp: { capable: true, title: 'Nell', statusBarStyle: 'default' },
+  appleWebApp: { capable: true, title: 'Nellvia', statusBarStyle: 'default' },
   icons: { icon: '/icon.svg', apple: '/icon.svg' },
 };
 

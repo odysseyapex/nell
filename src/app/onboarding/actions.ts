@@ -13,7 +13,7 @@ import type { StepInputType } from '@/lib/types';
 /**
  * Onboarding.
  *
- * The order matters: a coach describes their own method before Nell asks them
+ * The order matters: a coach describes their own method before Nellvia asks them
  * to invite anyone, because a framework built after the first client has
  * already started is a framework that gets abandoned.
  *

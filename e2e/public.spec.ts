@@ -34,7 +34,7 @@ test.describe('public surface', () => {
 });
 
 test.describe('access control', () => {
-  for (const path of ['/app', '/app/coach', '/app/today', '/app/settings', '/admin', '/onboarding']) {
+  for (const path of ['/app', '/app/coach', '/app/client', '/app/settings', '/admin', '/onboarding']) {
     test(`signed-out traffic to ${path} is sent to sign in`, async ({ page }) => {
       await page.goto(path);
       await expect(page).toHaveURL(/\/login/);

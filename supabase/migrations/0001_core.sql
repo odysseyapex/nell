@@ -1,5 +1,5 @@
 -- ============================================================================
--- Nell 0001 — Core tenancy: organizations, profiles, assignments, auth helpers
+-- Nellvia 0001 — Core tenancy: organizations, profiles, assignments, auth helpers
 -- ============================================================================
 
 create extension if not exists "pgcrypto";

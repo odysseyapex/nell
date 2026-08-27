@@ -87,7 +87,7 @@ export function composeBriefDeterministic(input: BriefInput): CoachingBriefConte
 
   if (observations.length === 0) {
     observations.push(
-      `${name} has not yet recorded enough commitments for Nell to read a pattern. ` +
+      `${name} has not yet recorded enough commitments for Nellvia to read a pattern. ` +
         'Two weeks of check-ins is usually the point where trends become readable.',
     );
   }

@@ -40,7 +40,7 @@ export default async function InvitePage({ params }: { params: Promise<{ token: 
             {invitation.firstName ? `Hi ${invitation.firstName},` : 'Welcome'}
           </CardTitle>
           <CardDescription>
-            {invitation.organizationName} has invited you to join them on Nell. Choose a password to
+            {invitation.organizationName} has invited you to join them on Nellvia. Choose a password to
             finish setting up.
           </CardDescription>
         </CardHeader>
@@ -57,7 +57,7 @@ export default async function InvitePage({ params }: { params: Promise<{ token: 
           <AcceptInviteForm token={token} />
 
           <p className="text-xs leading-relaxed text-muted-foreground">
-            Nell is a coaching support tool used by your coach. It is not a medical or therapeutic
+            Nellvia is a coaching support tool used by your coach. It is not a medical or therapeutic
             service and does not diagnose or treat any condition. What you record is visible to your
             coach.
           </p>

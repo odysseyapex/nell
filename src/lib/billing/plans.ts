@@ -29,7 +29,7 @@ export const PLANS: Record<PlanId, Plan> = {
     priceCents: 4900,
     currency: 'usd',
     clientLimit: 10,
-    tagline: 'For a coach getting their first roster into Nell.',
+    tagline: 'For a coach getting their first roster into Nellvia.',
     features: [
       'Up to 10 active clients',
       'Commitments, check-ins and follow-through',

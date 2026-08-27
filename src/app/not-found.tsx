@@ -10,7 +10,7 @@ export default function NotFound() {
         This page does not exist, or it belongs to a workspace you do not have access to.
       </p>
       <Button className="mt-6" asChild>
-        <Link href="/app">Back to Nell</Link>
+        <Link href="/app">Back to Nellvia</Link>
       </Button>
     </div>
   );

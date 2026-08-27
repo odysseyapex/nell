@@ -62,7 +62,7 @@ test.describe('coach', () => {
     await page.goto('/app/coach');
     await page.getByRole('link', { name: /sarah miller/i }).first().click();
 
-    await expect(page.getByText(/why nell flagged this/i)).toBeVisible();
+    await expect(page.getByText(/why nellvia flagged this/i)).toBeVisible();
     await expect(page.getByText(/7-day follow-through/i)).toBeVisible();
 
     await page.getByRole('tab', { name: /patterns/i }).click();
@@ -121,21 +121,26 @@ test.describe('coach', () => {
 test.describe('client', () => {
   test('the commitment flow captures text, date and confidence', async ({ page }) => {
     await signIn(page, 'amanda@clairecoaching.demo');
-    await page.goto('/app/today');
+    await page.goto('/app/client');
 
-    await expect(page.getByRole('heading', { name: /good (morning|afternoon|evening), amanda/i })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /good (morning|afternoon|evening), amanda/i }),
+    ).toBeVisible();
 
+    // Today shows what is already decided; making a new one lives on the
+    // Commitments tab, which is where the 20-second flow is.
+    await page.goto('/app/client/commitments');
     await page.getByLabel('What are you committing to?').fill('Walk the long way home');
     await page.getByRole('button', { name: /^commit$/i }).click();
 
     await page.waitForTimeout(1500);
-    await page.goto('/app/commitments');
+    await page.goto('/app/client/commitments');
     await expect(page.getByText('Walk the long way home').first()).toBeVisible({ timeout: 15_000 });
   });
 
   test('checking in requires an outcome and asks why when it did not go to plan', async ({ page }) => {
     await signIn(page, 'sarah@clairecoaching.demo');
-    await page.goto('/app/commitments');
+    await page.goto('/app/client/commitments');
 
     const outstandingBefore = await page.getByRole('button', { name: /record it/i }).count();
     test.skip(outstandingBefore === 0, 'No outstanding check-in for this client right now.');
@@ -150,7 +155,7 @@ test.describe('client', () => {
     // Once recorded, the commitment leaves the outstanding list — which is the
     // observable consequence, and the thing the coach's numbers depend on.
     await page.waitForTimeout(1500);
-    await page.goto('/app/commitments');
+    await page.goto('/app/client/commitments');
     await expect(page.getByRole('button', { name: /record it/i })).toHaveCount(
       outstandingBefore - 1,
       { timeout: 15_000 },
@@ -159,17 +164,63 @@ test.describe('client', () => {
 
   test('insights speak to the client, with evidence and without a score', async ({ page }) => {
     await signIn(page, 'rachel@clairecoaching.demo');
-    await page.goto('/app/insights');
+    await page.goto('/app/client/insights');
 
-    await expect(page.getByRole('heading', { name: /what nell has noticed/i })).toBeVisible();
-    await expect(page.getByText(/associations, not explanations/i)).toBeVisible();
-    // A client is never shown their risk level.
+    await expect(page.getByRole('heading', { name: /what nellvia noticed/i })).toBeVisible();
+
+    // Observations, not verdicts: every card shows the counts behind it.
+    await expect(page.getByText(/what this is based on/i).first()).toBeVisible();
+
+    // A client is never shown a risk level, a grade or a streak.
     await expect(page.getByText(/needs attention/i)).toHaveCount(0);
+    await expect(page.getByText(/watch/i)).toHaveCount(0);
+    await expect(page.getByText(/streak|compliance/i)).toHaveCount(0);
+  });
+
+  test('Today offers one obvious action and no dashboard', async ({ page }) => {
+    await signIn(page, 'sarah@clairecoaching.demo');
+    await page.goto('/app/client');
+
+    // Exactly one primary action, whichever the day calls for. (Which one it
+    // is depends on whether a check-in is outstanding, and earlier tests in
+    // this file may already have closed it.)
+    const checkIn = page.getByRole('button', { name: /^check in$/i });
+    const commit = page.getByRole('link', { name: /make a commitment/i });
+    await expect(checkIn.or(commit).first()).toBeVisible();
+
+    // No coach-side apparatus on the client's home screen.
+    const main = page.getByRole('main');
+    await expect(main.getByText(/needs attention/i)).toHaveCount(0);
+    await expect(main.getByText(/risk/i)).toHaveCount(0);
+    await expect(main.getByText(/streak|compliance/i)).toHaveCount(0);
+  });
+
+  test('history filters down to what actually happened', async ({ page }) => {
+    await signIn(page, 'sarah@clairecoaching.demo');
+    await page.goto('/app/client/history');
+
+    // Scoped to the timeline: the filter buttons carry the same words as the
+    // badges, so an unscoped query would always match the controls.
+    const timeline = page.getByRole('region', { name: /recorded commitments/i });
+    await expect(timeline).toBeVisible();
+
+    const total = await timeline.getByText(/went to plan|changed|didn't happen/i).count();
+    expect(total).toBeGreaterThan(0);
+
+    await page.getByRole('button', { name: /^didn't happen$/i }).click();
+    await expect(timeline.getByText(/^went to plan$/i)).toHaveCount(0);
+
+    const filtered = await timeline.getByText(/didn't happen/i).count();
+    expect(filtered).toBeGreaterThan(0);
+    expect(filtered).toBeLessThan(total);
+
+    await page.getByRole('button', { name: /^everything$/i }).click();
+    await expect(timeline.getByText(/went to plan/i).first()).toBeVisible();
   });
 
   test('history shows the client their own words back', async ({ page }) => {
     await signIn(page, 'jessica@clairecoaching.demo');
-    await page.goto('/app/history');
+    await page.goto('/app/client/history');
     await expect(page.getByRole('heading', { name: /^history$/i })).toBeVisible();
   });
 });
@@ -179,20 +230,20 @@ test.describe('tenancy and role boundaries', () => {
     await signIn(page, 'sarah@clairecoaching.demo');
     await page.goto('/app/coach');
     // Role guards redirect rather than render an empty coach view.
-    await expect(page).toHaveURL(/\/app\/today/);
+    await expect(page).toHaveURL(/\/app\/client/);
   });
 
   test('a client cannot reach another client’s page', async ({ page }) => {
     await signIn(page, 'sarah@clairecoaching.demo');
     await page.goto('/app/coach/clients');
-    await expect(page).toHaveURL(/\/app\/today/);
+    await expect(page).toHaveURL(/\/app\/client/);
   });
 
   test('a client cannot reach settings or the platform console', async ({ page }) => {
     await signIn(page, 'amanda@clairecoaching.demo');
 
     await page.goto('/app/settings');
-    await expect(page).toHaveURL(/\/app\/today/);
+    await expect(page).toHaveURL(/\/app\/client/);
 
     await page.goto('/admin');
     await expect(page).not.toHaveURL(/\/admin$/);

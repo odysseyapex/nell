@@ -73,7 +73,7 @@ export function serverEnv() {
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY ?? '',
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET ?? '',
     RESEND_API_KEY: process.env.RESEND_API_KEY ?? '',
-    RESEND_FROM_EMAIL: process.env.RESEND_FROM_EMAIL ?? 'Nell <onboarding@resend.dev>',
+    RESEND_FROM_EMAIL: process.env.RESEND_FROM_EMAIL ?? 'Nellvia <onboarding@resend.dev>',
     CRON_SECRET: process.env.CRON_SECRET ?? '',
     SENTRY_DSN: process.env.SENTRY_DSN ?? '',
   };
@@ -81,7 +81,7 @@ export function serverEnv() {
 
 /**
  * Feature availability, so the UI can degrade honestly rather than error.
- * Every one of these is optional: Nell's core loop works without any of them.
+ * Every one of these is optional: Nellvia's core loop works without any of them.
  */
 export const features = {
   get ai() {

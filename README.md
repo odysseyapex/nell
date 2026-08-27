@@ -1,8 +1,8 @@
-# Nell
+# Nellvia
 
 **Know which clients need you before they tell you.**
 
-Nell is a behavioural follow-through intelligence platform for coaches. It captures what clients
+Nellvia is a behavioural follow-through intelligence platform for coaches. It captures what clients
 commit to *before* the behaviour, records what actually happened *after* it and why, detects
 patterns across that history, and tells the coach which clients need attention and what may be
 worth exploring.
@@ -24,6 +24,7 @@ actually happened**. Nothing in the data model collapses those into a single don
 
 - [What makes this different](#what-makes-this-different)
 - [Architecture](#architecture)
+- [The client app](#the-client-app)
 - [Setup](#setup)
 - [Environment variables](#environment-variables)
 - [Supabase setup](#supabase-setup)
@@ -59,7 +60,7 @@ Four things, and they are all in the data model rather than the marketing:
    invent a pattern, change a number, or lower a threshold.
 
 4. **Interventions that get measured.** A pattern can become an experiment with a baseline recorded
-   at the moment it starts. When it closes, Nell measures the same metric over an equal-length
+   at the moment it starts. When it closes, Nellvia measures the same metric over an equal-length
    window and reports the result plainly, including when it did not work.
 
 ### Metric definitions
@@ -116,6 +117,47 @@ Responsive and mobile-first, with a PWA manifest and installable icons already i
 
 ---
 
+## The client app
+
+The coach app answers *who needs me and why?*. The client app answers a different
+question — *what did I commit to, what happened, and what am I learning about myself?* —
+and is built as a daily companion rather than a smaller dashboard.
+
+Four tabs, and nothing else: **Today · Commitments · Insights · History**.
+
+| Screen | Job |
+| --- | --- |
+| **Today** (`/app/client`) | What is outstanding, today's commitment and its confidence, the running experiment, and exactly one "Nellvia noticed" line. One primary action: **Check in**. No percentages, no trend arrow, no risk level. |
+| **Commitments** (`/app/client/commitments`) | The 20-second flow: what, when, what might make it harder (optional), how realistic it feels. Then Commit. |
+| **Insights** (`/app/client/insights`) | "Nellvia noticed…" cards, each with the counts behind it and a **Try this next**. The running experiment with day-of-total progress, and the results of finished ones. |
+| **History** (`/app/client/history`) | A plain timeline, filterable by went to plan / changed / didn't happen / area. |
+
+### Insights get smarter as the record grows
+
+`src/lib/insights/client.ts` picks what it is entitled to say from how much history exists:
+
+| History | What it says |
+| --- | --- |
+| Days 1–3 | A count. "You completed 2 of 3 commitments this week." |
+| Days 4–7 | At most **one** signal, explicitly labelled an early one, with its sample size. |
+| Days 8–30 | Context: the recurring factor behind changed plans, and the confidence gap. |
+| 30+ days | The conditions under which things go well — assembled only from comparisons that cleared their own thresholds, and stated as a description rather than a rule. |
+
+### Language rules, enforced by a test
+
+The client must never feel monitored. That is easy to state and easy to erode one
+label at a time, so `tests/unit/client-language.test.ts` fails the build on
+"compliance", "streak", "failure", "lazy", "excuse", "badge" and friends —
+across generated insight copy in six different data scenarios, the check-in
+outcome labels, and every file under the client surfaces. It also asserts the
+guard can still fail, so it cannot quietly rot into a no-op.
+
+Clients get **follow-through**, never a compliance score. A plan that did not
+happen **changed** or **didn't happen** — it did not fail. There are no streaks
+to break.
+
+---
+
 ## Setup
 
 ```bash
@@ -124,7 +166,7 @@ cp .env.example .env.local   # then fill in the Supabase values
 npm run dev
 ```
 
-Nell's core loop needs only Supabase. OpenAI, Stripe, Resend, PostHog and Sentry are all optional
+Nellvia's core loop needs only Supabase. OpenAI, Stripe, Resend, PostHog and Sentry are all optional
 and the product degrades honestly without them — see [Environment variables](#environment-variables).
 `/app/settings` shows which integrations are actually connected.
 
@@ -179,6 +221,7 @@ Validation is lazy and at the point of use, so `next build` never needs producti
    | `0005_settings_ops.sql` | AI settings, invitations, audit log, AI usage |
    | `0006_rls.sql` | Row Level Security policies for every tenant table |
    | `0007_views.sql` | `commitment_facts` view and plan-limit helper |
+   | `0008_client_experience.sql` | Client preferences, insights and experiments; anticipated obstacle; the one-tap reason vocabulary |
 
 4. Confirm RLS is on: every table in `0006_rls.sql` should show "RLS enabled" in the dashboard.
 
@@ -197,11 +240,11 @@ npm run db:reset     # delete and rebuild it
 This creates **Claire Coaching** with a coach and four clients, each carrying 90 days of
 deterministic synthetic history designed to produce four different, recognisable stories:
 
-| Client | Story | What Nell should say |
+| Client | Story | What Nellvia should say |
 | --- | --- | --- |
 | Sarah Miller | Strong for two months, declining for the last four weeks | Follow-through down; work stress dominates recent misses → **Needs attention** |
 | Jessica Lane | Reliable on weekdays, falls away at weekends | Weekend dip pattern; has an active experiment running |
-| Amanda Brooks | Consistently above 90% | **Stable.** Nell says almost nothing — which is the point |
+| Amanda Brooks | Consistently above 90% | **Stable.** Nellvia says almost nothing — which is the point |
 | Rachel Cole | Predicts ~90%, delivers ~60% | Overconfidence pattern; a completed experiment that worked |
 
 Ninety days are generated because trend detection compares the last 30 days against the 30 before
@@ -247,7 +290,7 @@ exists. The demo workspace ships in pilot mode.
 
 ## Resend setup
 
-Set `RESEND_API_KEY` and `RESEND_FROM_EMAIL` (a verified sending domain). Nell sends: coach welcome,
+Set `RESEND_API_KEY` and `RESEND_FROM_EMAIL` (a verified sending domain). Nellvia sends: coach welcome,
 client invitation, check-in reminder, weekly client summary, and the weekly coach attention email.
 
 The weekly coach email is the main retention surface. It sends **only when there is something to
@@ -268,7 +311,7 @@ so a coach's philosophy field cannot function as a prompt injection.
 
 Pattern wording is generated **once, when a pattern first appears**, and stored on the row. Rewriting every pattern nightly would multiply the model bill by the number of clients for no benefit — the underlying finding has not changed.
 
-If a call fails or the key is absent, Nell falls back to `composeBriefDeterministic` — the same
+If a call fails or the key is absent, Nellvia falls back to `composeBriefDeterministic` — the same
 brief, assembled from the same computed values, in plainer prose. The AI path improves the writing;
 it never supplies the substance.
 
@@ -349,7 +392,7 @@ Vercel, with the environment variables above set for the target environment.
 
 ## Security notes
 
-Nell holds behavioural material about real people, often about eating, weight and emotion. The
+Nellvia holds behavioural material about real people, often about eating, weight and emotion. The
 posture is accordingly conservative.
 
 - **Row Level Security on every tenant table**, with explicit policies. There is no default-allow
@@ -386,7 +429,7 @@ posture is accordingly conservative.
 
 ## Safety and scope
 
-Nell is a coaching support tool. It is **not** a medical, dietetic, psychological or therapeutic
+Nellvia is a coaching support tool. It is **not** a medical, dietetic, psychological or therapeutic
 service, and it does not diagnose or treat any condition. This is stated on the marketing page and
 on the invitation screen, and it is enforced in the AI layer rather than left to tone: the prompt
 rules explicitly forbid diagnosing, naming conditions, commenting on medication, prescribing
@@ -394,7 +437,7 @@ calories, macros, fasting or training loads, and any shaming language.
 
 Language throughout is associative rather than causal — "appears alongside", "may be worth
 exploring" — because that is what the data supports. A rule that fires below its minimum sample size
-would produce confident-sounding nonsense, so Nell says nothing instead.
+would produce confident-sounding nonsense, so Nellvia says nothing instead.
 
 ---
 
@@ -408,11 +451,8 @@ src/
     onboarding/        seven-step coach setup
     app/
       coach/           dashboard, client list, client detail, experiments
-      today/           client home — check-ins, reflection, commitment
-      commitments/     client commitment history
-      insights/        client-facing patterns
-      history/         the client's own record
-      exercise/        framework runner
+      client/          the daily companion — today, commitments, insights,
+                       history, settings, welcome, exercise runner
       settings/        framework, exercises, reasons, method, branding, team, billing
     admin/             platform console
     api/               stripe checkout/portal/webhook, cron jobs
@@ -421,6 +461,7 @@ src/
     coach/ client/ settings/ onboarding/ shared/
   lib/
     metrics/ patterns/ risk/ alerts/    the intelligence core (pure)
+    insights/                           client-facing, stage-aware insight engine
     ai/ data/ jobs/ email/ billing/     integrations and orchestration
     auth/ supabase/                     session, guards, clients
 supabase/migrations/   ordered SQL

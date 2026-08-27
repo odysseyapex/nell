@@ -166,7 +166,7 @@ const CLIENTS: ClientSpec[] = [
       }
       return {
         outcome: random() < 0.5 ? 'missed' : 'changed_intentionally',
-        reasonSlug: pick(random, ['social-situation', 'convenience', 'schedule-change', 'didnt-prepare']),
+        reasonSlug: pick(random, ['social-situation', 'schedule-change', 'didnt-prepare', 'changed-my-mind']),
         confidence: 70 + Math.floor(random() * 15),
         createdHour: 9 + Math.floor(random() * 6),
         text: pick(random, texts),
@@ -221,7 +221,7 @@ const CLIENTS: ClientSpec[] = [
       }
       return {
         outcome: random() < 0.4 ? 'missed' : 'changed_impulsively',
-        reasonSlug: pick(random, ['craving', 'hunger', 'emotion', 'convenience', 'didnt-prepare']),
+        reasonSlug: pick(random, ['hunger', 'changed-my-mind', 'didnt-prepare', 'low-energy']),
         confidence,
         createdHour: 21 + Math.floor(random() * 2),
         text: pick(random, texts),
@@ -232,17 +232,14 @@ const CLIENTS: ClientSpec[] = [
 
 const REASONS: { slug: string; name: string; category: string }[] = [
   { slug: 'stress', name: 'Stress', category: 'emotional' },
-  { slug: 'hunger', name: 'Hunger', category: 'physical' },
-  { slug: 'craving', name: 'Craving', category: 'physical' },
+  { slug: 'low-energy', name: 'Low energy', category: 'physical' },
   { slug: 'time', name: 'Not enough time', category: 'situational' },
+  { slug: 'hunger', name: 'Hunger', category: 'physical' },
   { slug: 'social-situation', name: 'Social situation', category: 'situational' },
   { slug: 'schedule-change', name: 'Schedule changed', category: 'situational' },
   { slug: 'forgot', name: 'Forgot', category: 'cognitive' },
   { slug: 'didnt-prepare', name: 'Did not prepare', category: 'cognitive' },
-  { slug: 'didnt-want-to', name: 'Did not want to', category: 'motivational' },
-  { slug: 'low-energy', name: 'Low energy', category: 'physical' },
-  { slug: 'emotion', name: 'Emotion', category: 'emotional' },
-  { slug: 'convenience', name: 'Convenience', category: 'situational' },
+  { slug: 'changed-my-mind', name: 'Changed my mind', category: 'motivational' },
   { slug: 'other', name: 'Other', category: 'other' },
 ];
 
@@ -252,6 +249,13 @@ const FRAMEWORK_STEPS = [
   { title: 'How did you feel?', description: '', input_type: 'short_text', required: false },
   { title: 'Choose — what did you do?', description: '', input_type: 'long_text', required: true },
   { title: 'Review — how settled do you feel about it?', description: '', input_type: 'scale', required: false, configuration_json: { min: 1, max: 10, minLabel: 'Unsettled', maxLabel: 'Settled' } },
+];
+
+const OBSTACLES = [
+  'A late meeting',
+  'Being tired after work',
+  'Eating out with friends',
+  'An early start the next day',
 ];
 
 const REFLECTIONS = [
@@ -394,6 +398,9 @@ function build(): Tables {
         updated_at: now,
       },
     ],
+    client_preferences: [],
+    client_insights: [],
+    client_experiments: [],
     invitations: [],
     audit_logs: [],
     ai_usage_events: [],
@@ -427,6 +434,18 @@ function build(): Tables {
       client_id: spec.id,
       is_primary: true,
       created_at: now,
+    });
+
+    tables.client_preferences.push({
+      id: id(`prefs-${spec.key}`),
+      organization_id: ORG_ID,
+      client_id: spec.id,
+      notification_preferences: { morning: true, when_due: true, evening_nudge: true, weekly: true },
+      preferred_checkin_time: '19:00',
+      timezone: 'America/New_York',
+      onboarding_complete: true,
+      created_at: now,
+      updated_at: now,
     });
 
     tables.exercise_assignments.push({

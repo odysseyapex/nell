@@ -7,7 +7,7 @@ import { env, serverEnv } from '@/lib/env';
 /**
  * Transactional email.
  *
- * Nell sends few emails on purpose: an invitation, a nudge when a check-in is
+ * Nellvia sends few emails on purpose: an invitation, a nudge when a check-in is
  * outstanding, and the weekly attention summary that is the coach's main
  * reason to come back. Anything beyond that trains people to ignore us.
  *
@@ -85,7 +85,7 @@ export function layout(options: {
       ${cta}
       <hr style="border:none;border-top:1px solid #e2e8f0;margin:32px 0 16px;" />
       <p style="font-size:12px;color:#94a3b8;margin:0;">
-        ${options.footer ?? 'Sent by Nell, the follow-through intelligence used by your coach.'}
+        ${options.footer ?? 'Sent by Nellvia, the follow-through intelligence used by your coach.'}
       </p>
     </div>
   </body></html>`;

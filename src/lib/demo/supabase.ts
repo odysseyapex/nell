@@ -190,6 +190,8 @@ class DemoQuery<T = Row[]> implements PromiseLike<Result<T>> {
 
     if (viewer.role === 'client') {
       if (COACH_PRIVATE.has(this.table)) return [];
+      // client_preferences, client_insights and client_experiments are the
+      // client's own rows, so the generic client_id filter below covers them.
       if (this.table === 'patterns') {
         return rows.filter((row) => row.client_id === viewer.profileId && row.status === 'active');
       }

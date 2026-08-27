@@ -105,7 +105,7 @@ export function generateAlerts(input: AlertInput): AlertCandidate[] {
       alertKey: 'exercise_completion_decline',
       severity: 'low',
       title: `Exercise completion at ${formatRate(metrics.exerciseCompletion30)}`,
-      description: 'Fewer reflections are being completed, which reduces what Nell can see.',
+      description: 'Fewer reflections are being completed, which reduces what Nellvia can see.',
       recommendedAction: 'Check whether the current exercise still fits how this client actually works.',
       evidence: { exerciseCompletion30: metrics.exerciseCompletion30 },
     });

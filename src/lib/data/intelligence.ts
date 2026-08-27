@@ -18,7 +18,7 @@ import type {
 } from '@/lib/types';
 
 /**
- * The read side of Nell's intelligence.
+ * The read side of Nellvia's intelligence.
  *
  * Every query here runs through the RLS-bound server client, so a coach
  * querying a client they are not assigned to gets an empty result rather than

@@ -70,7 +70,7 @@ function RateCell({ rate, counts }: { rate: number | null; counts: string }) {
 
 export function ClientsTable({ rows }: { rows: ClientRow[] }) {
   // Default sort puts the people who need attention at the top: an
-  // alphabetical roster makes the coach do the triage Nell exists to do.
+  // alphabetical roster makes the coach do the triage Nellvia exists to do.
   const [sorting, setSorting] = useState<SortingState>([{ id: 'risk', desc: false }]);
   const [search, setSearch] = useState('');
   const [riskFilter, setRiskFilter] = useState<RiskFilter>('all');

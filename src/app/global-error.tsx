@@ -32,7 +32,7 @@ export default function GlobalError({ error }: { error: Error & { digest?: strin
             textDecoration: 'none',
           }}
         >
-          Back to Nell
+          Back to Nellvia
         </a>
       </body>
     </html>

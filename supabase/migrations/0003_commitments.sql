@@ -1,9 +1,9 @@
 -- ============================================================================
--- Nell 0003 — Commitments, reason codes, check-ins
+-- Nellvia 0003 — Commitments, reason codes, check-ins
 --
 -- This is the heart of the product. A commitment is recorded BEFORE the
 -- behaviour, together with the client's own predicted confidence. A check-in
--- is recorded AFTER, with a structured outcome and reason. Nell never
+-- is recorded AFTER, with a structured outcome and reason. Nellvia never
 -- collapses the two into a single "done / not done" flag — the gap between
 -- intention and outcome is the signal.
 -- ============================================================================

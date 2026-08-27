@@ -77,7 +77,7 @@ export function homePathFor(role: UserRole): string {
     case 'super_admin':
       return '/admin';
     case 'client':
-      return '/app/today';
+      return '/app/client';
     default:
       return '/app/coach';
   }

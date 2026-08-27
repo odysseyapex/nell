@@ -9,7 +9,7 @@ import type { AnalyticsEvent, AnalyticsProperties } from '@/lib/analytics';
 /**
  * PostHog wiring.
  *
- * Autocapture is disabled deliberately. Nell's screens are full of client
+ * Autocapture is disabled deliberately. Nellvia's screens are full of client
  * reflection text, and autocapture records the text content of clicked
  * elements — which would quietly ship exactly the material this product
  * promises to keep private. Every event is therefore explicit.

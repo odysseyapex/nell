@@ -3,7 +3,7 @@ import type { Organization } from '@/lib/types';
 /**
  * Per-organization branding.
  *
- * Nell is a single multi-tenant application rather than one deployment per
+ * Nellvia is a single multi-tenant application rather than one deployment per
  * coach, so branding is applied as CSS custom properties on the app shell.
  * Components reference var(--brand) and never a hard-coded colour.
  */

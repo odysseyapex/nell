@@ -36,10 +36,10 @@ interface NavItem {
 }
 
 const CLIENT_NAV: NavItem[] = [
-  { href: '/app/today', label: 'Today', icon: Sun },
-  { href: '/app/commitments', label: 'Commitments', icon: ListChecks },
-  { href: '/app/insights', label: 'Insights', icon: Lightbulb },
-  { href: '/app/history', label: 'History', icon: History },
+  { href: '/app/client', label: 'Today', icon: Sun },
+  { href: '/app/client/commitments', label: 'Commitments', icon: ListChecks },
+  { href: '/app/client/insights', label: 'Insights', icon: Lightbulb },
+  { href: '/app/client/history', label: 'History', icon: History },
 ];
 
 const COACH_NAV: NavItem[] = [
@@ -50,7 +50,8 @@ const COACH_NAV: NavItem[] = [
 ];
 
 function isActive(pathname: string, href: string): boolean {
-  if (href === '/app/coach') return pathname === '/app/coach';
+  // Both roles have an index route that must not stay lit on every subpage.
+  if (href === '/app/coach' || href === '/app/client') return pathname === href;
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -70,7 +71,7 @@ export function AppNav({ profile, organization }: { profile: Profile; organizati
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
           <div className="flex items-center gap-6">
-            <Link href={isClient ? '/app/today' : '/app/coach'} className="flex items-center gap-2">
+            <Link href={isClient ? '/app/client' : '/app/coach'} className="flex items-center gap-2">
               {organization.logo_url ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={organization.logo_url} alt="" className="h-7 w-7 rounded object-cover" />
@@ -119,11 +120,9 @@ export function AppNav({ profile, organization }: { profile: Profile; organizati
                 {displayName(profile)}
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              {!isClient ? (
-                <DropdownMenuItem asChild>
-                  <Link href="/app/settings">Settings</Link>
-                </DropdownMenuItem>
-              ) : null}
+              <DropdownMenuItem asChild>
+                <Link href={isClient ? '/app/client/settings' : '/app/settings'}>Settings</Link>
+              </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <form action={signOut} className="w-full">
                   <button type="submit" className="w-full text-left">

@@ -23,7 +23,7 @@ export default async function MethodSettingsPage() {
       <div>
         <h2 className="text-lg font-semibold tracking-tight">Coaching method</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Shapes how Nell writes for you. It never changes what Nell measures.
+          Shapes how Nellvia writes for you. It never changes what Nellvia measures.
         </p>
       </div>
 

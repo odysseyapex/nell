@@ -23,18 +23,18 @@ export function clientInvitationEmail(params: {
       organizationName: params.organizationName,
       heading: `Hi ${params.clientFirstName},`,
       body: `
-        <p>${params.coachName} uses Nell to keep track of what you commit to between sessions — and, more usefully, what actually happens afterwards.</p>
+        <p>${params.coachName} uses Nellvia to keep track of what you commit to between sessions — and, more usefully, what actually happens afterwards.</p>
         ${welcome}
-        <p>It takes about thirty seconds a day. You record what you are committing to, and later you say what happened and what influenced it. Over time, Nell shows you the conditions under which things go well for you.</p>
+        <p>It takes about thirty seconds a day. You record what you are committing to, and later you say what happened and what influenced it. Over time, Nellvia shows you the conditions under which things go well for you.</p>
         <p>This link is unique to you and expires in 14 days.</p>`,
       ctaLabel: 'Set up your account',
       ctaUrl: url,
     }),
     text: `Hi ${params.clientFirstName},
 
-${params.coachName} has invited you to join ${params.organizationName} on Nell.
+${params.coachName} has invited you to join ${params.organizationName} on Nellvia.
 
-Nell takes about thirty seconds a day: record what you commit to, then say what actually happened and what influenced it.
+Nellvia takes about thirty seconds a day: record what you commit to, then say what actually happened and what influenced it.
 
 Set up your account: ${url}
 
@@ -49,9 +49,9 @@ export function coachWelcomeEmail(params: {
   const url = appUrl('/app/coach');
   return {
     to: '',
-    subject: 'Your Nell workspace is ready',
+    subject: 'Your Nellvia workspace is ready',
     html: layout({
-      organizationName: 'Nell',
+      organizationName: 'Nellvia',
       heading: `Welcome, ${params.firstName}`,
       body: `
         <p>${params.organizationName} is set up. Here is the shortest path to something useful:</p>
@@ -60,19 +60,19 @@ export function coachWelcomeEmail(params: {
           <li>Create one exercise from it.</li>
           <li>Invite one client.</li>
         </ol>
-        <p>Nell needs roughly two weeks of check-ins before patterns become readable. Until then it will tell you honestly that the sample is thin rather than inventing insight.</p>`,
-      ctaLabel: 'Open Nell',
+        <p>Nellvia needs roughly two weeks of check-ins before patterns become readable. Until then it will tell you honestly that the sample is thin rather than inventing insight.</p>`,
+      ctaLabel: 'Open Nellvia',
       ctaUrl: url,
     }),
     text: `Welcome, ${params.firstName}.
 
-${params.organizationName} is set up on Nell.
+${params.organizationName} is set up on Nellvia.
 
 1. Build your framework
 2. Create one exercise
 3. Invite one client
 
-Open Nell: ${url}`,
+Open Nellvia: ${url}`,
   };
 }
 
@@ -82,7 +82,7 @@ export function checkinReminderEmail(params: {
   commitmentText: string;
   commitmentDate: string;
 }): EmailMessage {
-  const url = appUrl('/app/today');
+  const url = appUrl('/app/client');
   return {
     to: '',
     subject: 'One quick check-in',
@@ -152,16 +152,16 @@ export function weeklyCoachEmail(params: {
       organizationName: params.organizationName,
       heading: `Good morning, ${params.coachFirstName}`,
       body,
-      ctaLabel: 'Open Nell',
+      ctaLabel: 'Open Nellvia',
       ctaUrl: appUrl('/app/coach'),
-      footer: 'You receive this once a week. Manage it in your Nell settings.',
+      footer: 'You receive this once a week. Manage it in your Nellvia settings.',
     }),
     text:
       count === 0
         ? `Good morning, ${params.coachFirstName}. No clients need your attention this week.`
         : `Good morning, ${params.coachFirstName}.\n\n${params.lines
             .map((l) => `${l.clientName}\n${l.headline}\n${l.detail}`)
-            .join('\n\n')}\n\nOpen Nell: ${appUrl('/app/coach')}`,
+            .join('\n\n')}\n\nOpen Nellvia: ${appUrl('/app/coach')}`,
   };
 }
 
@@ -179,7 +179,7 @@ export function weeklyClientEmail(params: {
 
   return {
     to: '',
-    subject: 'Your week in Nell',
+    subject: 'Your week in Nellvia',
     html: layout({
       organizationName: params.organizationName,
       heading: `Hi ${params.clientFirstName},`,
@@ -189,8 +189,8 @@ export function weeklyClientEmail(params: {
         )}).</p>
         ${reason}
         <p>Not a score — just what the record shows. The interesting question is what made the difference.</p>`,
-      ctaLabel: 'Open Nell',
-      ctaUrl: appUrl('/app/today'),
+      ctaLabel: 'Open Nellvia',
+      ctaUrl: appUrl('/app/client'),
     }),
     text: `Hi ${params.clientFirstName},
 
@@ -198,6 +198,6 @@ This week you completed ${params.completed} of ${params.eligible} commitments ($
       params.topReason ? `\n\nMost recorded factor: ${params.topReason}.` : ''
     }
 
-Open Nell: ${appUrl('/app/today')}`,
+Open Nellvia: ${appUrl('/app/client')}`,
   };
 }

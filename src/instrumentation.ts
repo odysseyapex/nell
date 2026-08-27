@@ -13,7 +13,7 @@ export async function register() {
   Sentry.init({
     dsn,
     tracesSampleRate: 0.1,
-    // Nell handles behavioural data about real people. Nothing that could
+    // Nellvia handles behavioural data about real people. Nothing that could
     // carry a client's own words is sent to an error tracker.
     sendDefaultPii: false,
     beforeSend(event) {

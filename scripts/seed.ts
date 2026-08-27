@@ -2,7 +2,7 @@
  * Demo seed: Claire Coaching.
  *
  * Builds a workspace whose numbers tell four different, recognisable stories,
- * so a coach evaluating Nell sees the product working rather than a screen of
+ * so a coach evaluating Nellvia sees the product working rather than a screen of
  * placeholder rows:
  *
  *   Sarah Miller    follow-through falling; work stress dominates recent misses
@@ -160,7 +160,7 @@ const CLIENTS: ClientSpec[] = [
 
       return {
         outcome: random() < 0.5 ? 'missed' : 'changed_intentionally',
-        reasonSlug: pick(random, ['social-situation', 'convenience', 'schedule-change', 'didnt-prepare']),
+        reasonSlug: pick(random, ['social-situation', 'schedule-change', 'didnt-prepare', 'changed-my-mind']),
         confidence: 70 + Math.floor(random() * 15),
         createdHour: 9 + Math.floor(random() * 6),
         text: pick(random, texts),
@@ -173,7 +173,7 @@ const CLIENTS: ClientSpec[] = [
     email: 'amanda@clairecoaching.demo',
     seed: 3003,
     commitments: [...WALKING, ...EVENING],
-    /** The steady one. Nell should say almost nothing about her. */
+    /** The steady one. Nellvia should say almost nothing about her. */
     plan: (_daysAgo, _date, random, texts) => {
       const success = random() < 0.93;
       if (success) {
@@ -221,7 +221,7 @@ const CLIENTS: ClientSpec[] = [
 
       return {
         outcome: random() < 0.4 ? 'missed' : 'changed_impulsively',
-        reasonSlug: pick(random, ['craving', 'hunger', 'emotion', 'convenience', 'didnt-prepare']),
+        reasonSlug: pick(random, ['hunger', 'changed-my-mind', 'didnt-prepare', 'low-energy']),
         confidence,
         createdHour: 21 + Math.floor(random() * 2),
         text: pick(random, texts),

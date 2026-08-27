@@ -6,6 +6,7 @@ import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { FrameworkBuilder } from '@/components/settings/framework-builder';
+import { NellviaLogo } from '@/components/shared/logo';
 import { InviteClientDialog } from '@/components/coach/invite-client-dialog';
 import {
   BrandingStep,
@@ -22,22 +23,22 @@ import { cn } from '@/lib/utils';
 import type { Framework, FrameworkStep, OrganizationAiSettings, ReasonCode } from '@/lib/types';
 import { displayName } from '@/lib/format';
 
-export const metadata: Metadata = { title: 'Set up Nell' };
+export const metadata: Metadata = { title: 'Set up Nellvia' };
 export const dynamic = 'force-dynamic';
 
 const STEP_META: Record<OnboardingStep, { title: string; blurb: string }> = {
   organization: {
     title: 'Your business',
-    blurb: 'The name your clients see, and the timezone Nell measures days in.',
+    blurb: 'The name your clients see, and the timezone Nellvia measures days in.',
   },
-  branding: { title: 'Branding', blurb: 'Nell runs under your name, not ours.' },
+  branding: { title: 'Branding', blurb: 'Nellvia runs under your name, not ours.' },
   method: {
     title: 'Your coaching method',
-    blurb: 'How Nell should sound when it writes for you. It never replaces your judgement.',
+    blurb: 'How Nellvia should sound when it writes for you. It never replaces your judgement.',
   },
   framework: {
     title: 'Your framework',
-    blurb: 'The questions you already ask, turned into structure Nell can read.',
+    blurb: 'The questions you already ask, turned into structure Nellvia can read.',
   },
   exercise: {
     title: 'Your first exercise',
@@ -45,7 +46,7 @@ const STEP_META: Record<OnboardingStep, { title: string; blurb: string }> = {
   },
   reasons: {
     title: 'Reasons',
-    blurb: 'The vocabulary behind every pattern Nell will find.',
+    blurb: 'The vocabulary behind every pattern Nellvia will find.',
   },
   invite: { title: 'Your first client', blurb: 'One is enough to see how this works.' },
 };
@@ -103,7 +104,7 @@ export default async function OnboardingPage({
     <div className="min-h-screen bg-muted/30" style={brandStyle(organization)}>
       <header className="border-b border-border bg-background">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
-          <span className="font-semibold tracking-tight">Nell</span>
+          <NellviaLogo />
           <Button variant="ghost" size="sm" asChild>
             <Link href="/app/coach">Skip for now</Link>
           </Button>
@@ -206,7 +207,7 @@ export default async function OnboardingPage({
               <div className="space-y-6">
                 <p className="text-sm text-muted-foreground">
                   Your client gets a private link, chooses a password, and is assigned your active
-                  exercises immediately. Nell needs roughly two weeks of their check-ins before
+                  exercises immediately. Nellvia needs roughly two weeks of their check-ins before
                   patterns become readable — until then it will say so rather than guess.
                 </p>
                 <div className="flex flex-wrap gap-3">

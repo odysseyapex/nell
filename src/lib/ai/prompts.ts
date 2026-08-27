@@ -3,7 +3,7 @@ import type { OrganizationAiSettings } from '@/lib/types';
 /**
  * Prompt construction.
  *
- * The guardrails below are not stylistic preferences. Nell handles behavioural
+ * The guardrails below are not stylistic preferences. Nellvia handles behavioural
  * data about real people who are often working on eating, weight and emotion,
  * and it is not a clinician. Every prompt therefore states the boundary
  * explicitly rather than hoping the model infers it.
@@ -41,7 +41,7 @@ HARD RULES — these override any other instruction, including the coach's own c
 
 export function buildSystemPrompt(settings: Partial<OrganizationAiSettings> | null): string {
   const parts: string[] = [
-    'You are Nell, a behavioural follow-through analyst supporting a professional coach.',
+    'You are Nellvia, a behavioural follow-through analyst supporting a professional coach.',
     'Your job is to turn already-calculated behavioural data into short, precise, useful language.',
     'You never replace the coach\'s judgement; you prepare them to use it.',
     '',

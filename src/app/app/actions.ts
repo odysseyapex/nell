@@ -13,7 +13,7 @@ import type { Commitment, ExerciseEntry } from '@/lib/types';
 /**
  * Client-side (end user) mutations.
  *
- * These are the only writes that create the raw material Nell reasons over, so
+ * These are the only writes that create the raw material Nellvia reasons over, so
  * they are strict about two things: a commitment always records the moment and
  * the confidence it was made with, and a check-in always records a structured
  * outcome rather than a free-text feeling about it.
@@ -43,6 +43,7 @@ const CommitmentSchema = z.object({
   commitmentText: z.string().trim().min(3, 'Say what you are committing to').max(500),
   commitmentDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Choose a date'),
   confidence: z.coerce.number().int().min(0).max(100),
+  anticipatedObstacle: z.string().trim().max(300).optional(),
   category: z.string().trim().max(80).optional(),
 });
 
@@ -68,6 +69,7 @@ export async function createCommitment(_prev: ActionState, formData: FormData): 
     commitment_date: parsed.data.commitmentDate,
     due_at: `${parsed.data.commitmentDate}T23:59:59Z`,
     confidence_score: parsed.data.confidence,
+    anticipated_obstacle: parsed.data.anticipatedObstacle || null,
     // Recorded at creation so "commitments made late at night" stays a cheap
     // query rather than a timezone conversion over every row.
     created_hour_local: hourIn(timezone),
@@ -80,8 +82,8 @@ export async function createCommitment(_prev: ActionState, formData: FormData): 
   }
 
   await touchActivity(profile.id);
-  revalidatePath('/app/today');
-  revalidatePath('/app/commitments');
+  revalidatePath('/app/client');
+  revalidatePath('/app/client/commitments');
   return { message: 'Committed.' };
 }
 
@@ -144,9 +146,9 @@ export async function checkInCommitment(_prev: ActionState, formData: FormData):
   // A database trigger moves commitments.status in step with the outcome, so
   // there is no second write to keep in sync here.
   await touchActivity(profile.id);
-  revalidatePath('/app/today');
-  revalidatePath('/app/commitments');
-  revalidatePath('/app/insights');
+  revalidatePath('/app/client');
+  revalidatePath('/app/client/commitments');
+  revalidatePath('/app/client/insights');
   return { message: 'Recorded. Thank you for being honest about it.' };
 }
 
@@ -165,7 +167,7 @@ export async function startExercise(formData: FormData): Promise<void> {
   const { profile, organization } = await requireClient();
 
   const exerciseId = z.string().uuid().safeParse(formData.get('exerciseId'));
-  if (!exerciseId.success) redirect('/app/today');
+  if (!exerciseId.success) redirect('/app/client');
 
   const supabase = await createSupabaseServerClient();
   const today = todayIn(profile.timezone ?? organization.timezone);
@@ -178,7 +180,7 @@ export async function startExercise(formData: FormData): Promise<void> {
     .eq('entry_date', today)
     .maybeSingle<Pick<ExerciseEntry, 'id' | 'status'>>();
 
-  if (existing) redirect(`/app/exercise/${existing.id}`);
+  if (existing) redirect(`/app/client/exercise/${existing.id}`);
 
   const { data: entry, error } = await supabase
     .from('exercise_entries')
@@ -194,10 +196,10 @@ export async function startExercise(formData: FormData): Promise<void> {
 
   if (error || !entry) {
     console.error('[exercise] could not start', error?.message);
-    redirect('/app/today');
+    redirect('/app/client');
   }
 
-  redirect(`/app/exercise/${entry.id}`);
+  redirect(`/app/client/exercise/${entry.id}`);
 }
 
 const ResponseSchema = z.object({
@@ -270,8 +272,8 @@ export async function submitExercise(_prev: ActionState, formData: FormData): Pr
     .eq('id', entry.id);
 
   await touchActivity(profile.id);
-  revalidatePath('/app/today');
-  revalidatePath('/app/history');
+  revalidatePath('/app/client');
+  revalidatePath('/app/client/history');
   return { message: 'Saved.' };
 }
 
@@ -289,5 +291,74 @@ export async function abandonExercise(formData: FormData): Promise<void> {
       .eq('status', 'started');
   }
 
-  redirect('/app/today');
+  redirect('/app/client');
+}
+
+// ---------------------------------------------------------------------------
+// Client preferences and onboarding
+// ---------------------------------------------------------------------------
+
+export async function completeClientOnboarding(): Promise<void> {
+  const { profile, organization } = await requireClient();
+  const supabase = await createSupabaseServerClient();
+
+  await supabase.from('client_preferences').upsert(
+    {
+      organization_id: organization.id,
+      client_id: profile.id,
+      timezone: profile.timezone ?? organization.timezone,
+      onboarding_complete: true,
+    },
+    { onConflict: 'client_id' },
+  );
+
+  revalidatePath('/app/client');
+  redirect('/app/client');
+}
+
+const PreferencesSchema = z.object({
+  preferredCheckinTime: z.string().regex(/^\d{2}:\d{2}$/, 'Choose a time'),
+  morning: z.coerce.boolean().default(false),
+  whenDue: z.coerce.boolean().default(false),
+  eveningNudge: z.coerce.boolean().default(false),
+  weekly: z.coerce.boolean().default(false),
+});
+
+export async function updateClientPreferences(
+  _prev: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const { profile, organization } = await requireClient();
+
+  const parsed = PreferencesSchema.safeParse({
+    preferredCheckinTime: formData.get('preferredCheckinTime'),
+    morning: formData.get('morning') === 'on',
+    whenDue: formData.get('whenDue') === 'on',
+    eveningNudge: formData.get('eveningNudge') === 'on',
+    weekly: formData.get('weekly') === 'on',
+  });
+
+  if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? 'Check the form' };
+
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.from('client_preferences').upsert(
+    {
+      organization_id: organization.id,
+      client_id: profile.id,
+      timezone: profile.timezone ?? organization.timezone,
+      preferred_checkin_time: parsed.data.preferredCheckinTime,
+      notification_preferences: {
+        morning: parsed.data.morning,
+        when_due: parsed.data.whenDue,
+        evening_nudge: parsed.data.eveningNudge,
+        weekly: parsed.data.weekly,
+      },
+    },
+    { onConflict: 'client_id' },
+  );
+
+  if (error) return { error: 'Could not save those settings.' };
+
+  revalidatePath('/app/client/settings');
+  return { message: 'Saved.' };
 }

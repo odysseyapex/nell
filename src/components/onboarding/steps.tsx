@@ -70,7 +70,7 @@ export function OrganizationStep({ name, timezone }: { name: string; timezone: s
       <div className="space-y-2">
         <Label htmlFor="name">Business name</Label>
         <Input id="name" name="name" defaultValue={name} required />
-        <p className="text-xs text-muted-foreground">Your clients see this everywhere in Nell.</p>
+        <p className="text-xs text-muted-foreground">Your clients see this everywhere in Nellvia.</p>
       </div>
 
       <div className="space-y-2">
@@ -88,7 +88,7 @@ export function OrganizationStep({ name, timezone }: { name: string; timezone: s
           </SelectContent>
         </Select>
         <p className="text-xs text-muted-foreground">
-          Determines what counts as &ldquo;today&rdquo; when Nell measures follow-through.
+          Determines what counts as &ldquo;today&rdquo; when Nellvia measures follow-through.
         </p>
       </div>
 
@@ -207,7 +207,7 @@ export function MethodStep({
           className="min-h-[110px]"
         />
         <p className="text-xs text-muted-foreground">
-          Nell uses this to write in your voice when it summarises for you.
+          Nellvia uses this to write in your voice when it summarises for you.
         </p>
       </div>
 
@@ -230,7 +230,7 @@ export function MethodStep({
           placeholder="goals=experiments, weigh-in=check-in"
         />
         <p className="text-xs text-muted-foreground">
-          Comma-separated pairs. Nell will use the word on the right.
+          Comma-separated pairs. Nellvia will use the word on the right.
         </p>
       </div>
 
@@ -245,12 +245,12 @@ export function MethodStep({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="systemGuidelines">Anything else Nell should know</Label>
+        <Label htmlFor="systemGuidelines">Anything else Nellvia should know</Label>
         <Textarea id="systemGuidelines" name="systemGuidelines" defaultValue={systemGuidelines} />
       </div>
 
       <div className="evidence">
-        Nell is prevented from diagnosing, prescribing, or giving medical, psychological or
+        Nellvia is prevented from diagnosing, prescribing, or giving medical, psychological or
         nutritional treatment advice regardless of what is written here. These settings shape tone
         and vocabulary, not clinical scope.
       </div>
@@ -306,7 +306,7 @@ export function ExerciseStep({ redirectTo }: { redirectTo?: string }) {
         <div>
           <Label htmlFor="prompts">End with a commitment</Label>
           <p className="mt-1 text-sm text-muted-foreground">
-            Strongly recommended. The commitment is what Nell measures against — a reflection with
+            Strongly recommended. The commitment is what Nellvia measures against — a reflection with
             no commitment produces no follow-through data.
           </p>
         </div>
@@ -338,7 +338,7 @@ export function ReasonCodesStep({
       <div>
         <p className="font-medium">Reasons your clients can choose from</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          These become the structured vocabulary behind every pattern Nell finds, so they are worth
+          These become the structured vocabulary behind every pattern Nellvia finds, so they are worth
           matching to how you actually talk. Turning one off keeps past check-ins intact.
         </p>
       </div>

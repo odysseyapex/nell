@@ -4,15 +4,16 @@ import { ArrowRight, Compass, LineChart, Microscope, ShieldCheck } from 'lucide-
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { NellviaLogo } from '@/components/shared/logo';
 import { PLANS, PLAN_ORDER, formatPrice } from '@/lib/billing/plans';
 
 const LOOP = [
   { step: 'Commit', detail: 'The client records what they intend to do — and how confident they are.' },
-  { step: 'Live', detail: 'Life happens. Nell stays out of the way.' },
+  { step: 'Live', detail: 'Life happens. Nellvia stays out of the way.' },
   { step: 'Check in', detail: 'Thirty seconds: what happened, and what influenced it.' },
   { step: 'Compare', detail: 'Intention against outcome. This gap is the product.' },
   { step: 'Pattern', detail: 'Rules over counted rows surface what recurs.' },
-  { step: 'Intervene', detail: 'The coach runs an experiment, and Nell measures it.' },
+  { step: 'Intervene', detail: 'The coach runs an experiment, and Nellvia measures it.' },
 ];
 
 const PILLARS = [
@@ -29,7 +30,7 @@ const PILLARS = [
   {
     icon: LineChart,
     title: 'Know whether it worked',
-    body: 'Turn a pattern into an experiment with a baseline. Nell measures the same metric afterwards and tells you plainly whether it moved.',
+    body: 'Turn a pattern into an experiment with a baseline. Nellvia measures the same metric afterwards and tells you plainly whether it moved.',
   },
   {
     icon: ShieldCheck,
@@ -43,7 +44,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-background">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <div className="flex items-center gap-2">
-          <span className="text-lg font-semibold tracking-tight">Nell</span>
+          <NellviaLogo />
           <Badge variant="muted" className="hidden sm:inline-flex">
             Coach intelligence
           </Badge>
@@ -65,12 +66,12 @@ export default function LandingPage() {
               Know which clients need you before they tell you.
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-              Nell captures what your clients commit to, compares it with what actually happens,
+              Nellvia captures what your clients commit to, compares it with what actually happens,
               identifies the patterns behind missed commitments, and gives you a concise view of
               where your attention matters this week.
             </p>
             <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-              Stop reading every journal. Nell surfaces the clients and the patterns that deserve
+              Stop reading every journal. Nellvia surfaces the clients and the patterns that deserve
               your time.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -133,10 +134,10 @@ export default function LandingPage() {
 
         <section className="border-y border-border bg-muted/30 py-20">
           <div className="mx-auto max-w-6xl px-6">
-            <h2 className="text-2xl font-semibold tracking-tight">The loop Nell is built around</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">The loop Nellvia is built around</h2>
             <p className="mt-3 max-w-2xl text-muted-foreground">
               A commitment is recorded <em>before</em> the behaviour, with a predicted confidence.
-              What actually happened is recorded after, with a structured reason. Nell never
+              What actually happened is recorded after, with a structured reason. Nellvia never
               collapses those into a single done/not-done flag — the distance between them is the
               entire signal.
             </p>
@@ -204,10 +205,10 @@ export default function LandingPage() {
 
       <footer className="mx-auto max-w-6xl px-6 py-12">
         <p className="text-sm text-muted-foreground">
-          Nell is a coaching support tool. It is not a medical, dietetic, psychological or
+          Nellvia is a coaching support tool. It is not a medical, dietetic, psychological or
           therapeutic service, and it does not diagnose or treat any condition.
         </p>
-        <p className="mt-4 text-sm text-muted-foreground">© {new Date().getFullYear()} Nell</p>
+        <p className="mt-4 text-sm text-muted-foreground">© {new Date().getFullYear()} Nellvia</p>
       </footer>
     </div>
   );

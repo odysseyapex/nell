@@ -1,5 +1,5 @@
 /**
- * Domain types for Nell.
+ * Domain types for Nellvia.
  *
  * These mirror the SQL schema in supabase/migrations. They are hand-written
  * rather than generated so that the pure logic in lib/metrics, lib/patterns
@@ -212,6 +212,8 @@ export interface Commitment {
   commitment_date: string;
   due_at: string | null;
   confidence_score: number | null;
+  /** What the client expected might get in the way, captured when committing. */
+  anticipated_obstacle: string | null;
   status: CommitmentStatus;
   created_hour_local: number | null;
   created_at: string;
@@ -407,4 +409,50 @@ export interface SessionContext {
   authUserId: string;
   profile: Profile;
   organization: Organization | null;
+}
+
+// ---------------------------------------------------------------------------
+// Client experience
+// ---------------------------------------------------------------------------
+
+export interface ClientPreferences {
+  id: string;
+  organization_id: string;
+  client_id: string;
+  notification_preferences: {
+    morning?: boolean;
+    when_due?: boolean;
+    evening_nudge?: boolean;
+    weekly?: boolean;
+  };
+  preferred_checkin_time: string;
+  timezone: string | null;
+  onboarding_complete: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface StoredClientInsight {
+  id: string;
+  organization_id: string;
+  client_id: string;
+  insight_type: string;
+  insight_key: string;
+  title: string;
+  summary: string;
+  suggestion: string | null;
+  evidence_json: Record<string, unknown>;
+  created_at: string;
+  dismissed_at: string | null;
+}
+
+export interface ClientExperimentLink {
+  id: string;
+  organization_id: string;
+  client_id: string;
+  experiment_id: string;
+  status: string;
+  reflection: string | null;
+  created_at: string;
+  updated_at: string;
 }

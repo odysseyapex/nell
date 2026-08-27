@@ -20,7 +20,7 @@ import type { FrameworkStep, StepInputType } from '@/lib/types';
 /**
  * The framework builder.
  *
- * This is where a coach's own methodology becomes structured data. Nell ships
+ * This is where a coach's own methodology becomes structured data. Nellvia ships
  * templates because a blank canvas is where onboarding dies, but every one of
  * them is fully editable text — no coaching method is baked into the product.
  */
@@ -174,7 +174,7 @@ export function FrameworkBuilder({
           <CardContent className="p-5">
             <p className="font-medium">Start from a template</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Every word is editable afterwards. These are starting points, not Nell&apos;s opinion
+              Every word is editable afterwards. These are starting points, not Nellvia&apos;s opinion
               about how you should coach.
             </p>
             <div className="mt-4 grid gap-3 sm:grid-cols-3">

@@ -10,7 +10,11 @@ import type { Exercise, ExerciseEntry, ExerciseResponse, FrameworkStep } from '@
 export const metadata: Metadata = { title: 'Reflection' };
 export const dynamic = 'force-dynamic';
 
-export default async function ExercisePage({ params }: { params: Promise<{ entryId: string }> }) {
+export default async function ClientExercisePage({
+  params,
+}: {
+  params: Promise<{ entryId: string }>;
+}) {
   const { profile, organization } = await requireClient();
   const { entryId } = await params;
 

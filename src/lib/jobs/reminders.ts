@@ -10,7 +10,7 @@ import type { Commitment, CommitmentFact, Organization, Profile } from '@/lib/ty
 /**
  * Client-facing email.
  *
- * Nell is stingy with these on purpose. A client who feels chased stops
+ * Nellvia is stingy with these on purpose. A client who feels chased stops
  * recording honestly, and dishonest check-ins are worse than missing ones —
  * they put wrong numbers in front of the coach. So:
  *

@@ -99,7 +99,7 @@ export function ExerciseRunner({
       track(ANALYTICS_EVENTS.exerciseCompleted);
       setSaved(true);
       // When the framework does not roll into a commitment, the client is done.
-      if (!promptsCommitment) router.push('/app/today');
+      if (!promptsCommitment) router.push('/app/client');
     }
     if (state.error) toast.error(state.error);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -142,11 +142,11 @@ export function ExerciseRunner({
         <header>
           <h1 className="text-2xl font-semibold tracking-tight">One last thing</h1>
           <p className="mt-1 text-muted-foreground">
-            What are you committing to next? This is the part Nell watches.
+            What are you committing to next? This is the part Nellvia watches.
           </p>
         </header>
         <CommitmentForm today={today} tomorrow={tomorrow} />
-        <Button variant="ghost" className="w-full" onClick={() => router.push('/app/today')}>
+        <Button variant="ghost" className="w-full" onClick={() => router.push('/app/client')}>
           Skip for now
         </Button>
       </div>

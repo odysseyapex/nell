@@ -29,6 +29,7 @@ export function CommitmentForm({ today, tomorrow }: { today: string; tomorrow: s
   const [confidence, setConfidence] = useState(70);
   const [text, setText] = useState('');
   const [date, setDate] = useState(tomorrow);
+  const [obstacle, setObstacle] = useState('');
 
   useEffect(() => {
     if (state.message) {
@@ -38,6 +39,7 @@ export function CommitmentForm({ today, tomorrow }: { today: string; tomorrow: s
       });
       setText('');
       setConfidence(70);
+      setObstacle('');
     }
     if (state.error) toast.error(state.error);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,6 +95,23 @@ export function CommitmentForm({ today, tomorrow }: { today: string; tomorrow: s
                 required
               />
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="anticipatedObstacle" className="text-base">
+              What might make this harder?{' '}
+              <span className="font-normal text-muted-foreground">(optional)</span>
+            </Label>
+            <Input
+              id="anticipatedObstacle"
+              name="anticipatedObstacle"
+              placeholder="A late meeting, being tired, eating out"
+              value={obstacle}
+              onChange={(event) => setObstacle(event.target.value)}
+            />
+            <p className="text-xs text-muted-foreground">
+              Naming it now makes it easier to spot later.
+            </p>
           </div>
 
           <div className="space-y-3">

@@ -117,7 +117,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
       {risk.reasons.length > 0 ? (
         <Card className="mt-6 border-l-4" style={{ borderLeftColor: 'var(--brand)' }}>
           <CardContent className="p-5">
-            <p className="metric-label">Why Nell flagged this</p>
+            <p className="metric-label">Why Nellvia flagged this</p>
             <ul className="mt-2 space-y-1 text-sm">
               {risk.reasons.map((reason) => (
                 <li key={reason.code}>· {reason.label}</li>
@@ -369,7 +369,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
           {patterns.length === 0 ? (
             <EmptyState
               title="No patterns detected yet"
-              description="Nell only reports a pattern once there is enough data behind it. Roughly two weeks of check-ins is usually the point where rules start to fire."
+              description="Nellvia only reports a pattern once there is enough data behind it. Roughly two weeks of check-ins is usually the point where rules start to fire."
             />
           ) : (
             patterns.map((pattern) => {

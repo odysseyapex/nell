@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
  * Settings overview.
  *
  * Doubles as a health check: a coach can see at a glance whether the pieces
- * that make Nell useful are actually in place, rather than discovering a
+ * that make Nellvia useful are actually in place, rather than discovering a
  * missing framework when a client has nothing to do.
  */
 export default async function SettingsOverviewPage() {
@@ -89,7 +89,7 @@ export default async function SettingsOverviewPage() {
           <p className="font-medium">Integrations</p>
           <ul className="space-y-2 text-sm">
             {[
-              { label: 'AI wording for briefs and insights', on: features.ai, note: 'Nell falls back to plain generated text without it.' },
+              { label: 'AI wording for briefs and insights', on: features.ai, note: 'Nellvia falls back to plain generated text without it.' },
               { label: 'Email delivery', on: features.email, note: 'Invitations show a copyable link instead.' },
               { label: 'Billing', on: features.billing, note: 'Plan changes are manual without it.' },
               { label: 'Product analytics', on: features.analytics, note: 'Optional.' },

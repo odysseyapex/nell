@@ -1,5 +1,5 @@
 -- ============================================================================
--- Nell 0006 — Row Level Security
+-- Nellvia 0006 — Row Level Security
 --
 -- Rules of the house:
 --   * Every tenant table has RLS enabled and an explicit policy. There is no

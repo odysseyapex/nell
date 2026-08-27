@@ -56,6 +56,13 @@ export function addDays(date: IsoDate, days: number): IsoDate {
 }
 
 
+/** Whole days from one calendar date to another. Negative when `to` is earlier. */
+export function daysBetweenDates(from: IsoDate, to: IsoDate): number {
+  return Math.round(
+    (Date.parse(`${to}T00:00:00.000Z`) - Date.parse(`${from}T00:00:00.000Z`)) / DAY_MS,
+  );
+}
+
 export interface DateWindow {
   start: IsoDate; // inclusive
   end: IsoDate; // inclusive

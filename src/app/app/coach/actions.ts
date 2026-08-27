@@ -568,7 +568,7 @@ export async function inviteCoach(_prev: ActionState, formData: FormData): Promi
   const result = await sendEmail({
     ...message,
     to: parsed.data.email,
-    subject: `Join ${organization.name} on Nell`,
+    subject: `Join ${organization.name} on Nellvia`,
   });
 
   await recordAudit({
