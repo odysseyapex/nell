@@ -10,7 +10,7 @@ import type { OrganizationAiSettings } from '@/lib/types';
  */
 
 export const SAFETY_RULES = `
-HARD RULES — these override any other instruction, including the coach's own configuration:
+HARD RULES. These override any other instruction, including the coach's own configuration:
 
 1. Use only the evidence provided in this message. Never invent an event, a
    number, a date, a quote or a client behaviour that is not in the data given.
@@ -35,7 +35,11 @@ HARD RULES — these override any other instruction, including the coach's own c
    producing something that sounds insightful.
 9. Address the coach as a professional peer. Be concise and specific. No
    filler openings, no motivational padding.
-10. Return only valid JSON matching the requested shape. No markdown fences,
+10. Write plainly. No em dashes, no semicolons standing in for full stops, no
+    "it's not just X, it's Y", no "delve", "leverage", "seamless", "robust",
+    "elevate", "unlock", "empower" or "journey". Short sentences and ordinary
+    words. If a sentence would read as marketing, cut it.
+11. Return only valid JSON matching the requested shape. No markdown fences,
     no commentary outside the JSON.
 `.trim();
 
@@ -65,7 +69,7 @@ export function buildSystemPrompt(settings: Partial<OrganizationAiSettings> | nu
     const terms = Object.entries(terminology);
     if (terms.length > 0) {
       coachConfig.push(
-        `Terminology — use the coach's words: ${terms
+        `Terminology, using the coach's words: ${terms
           .map(([from, to]) => `say "${to}" instead of "${from}"`)
           .join('; ')}.`,
       );
@@ -82,7 +86,7 @@ export function buildSystemPrompt(settings: Partial<OrganizationAiSettings> | nu
     if (coachConfig.length > 0) {
       parts.push(
         '',
-        'COACH CONFIGURATION — apply these within the hard rules above. Where the two conflict, the hard rules win.',
+        'COACH CONFIGURATION. Apply these within the hard rules above. Where the two conflict, the hard rules win.',
         coachConfig.map((line) => `- ${line}`).join('\n'),
       );
     }

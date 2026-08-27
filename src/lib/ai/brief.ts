@@ -170,7 +170,7 @@ export async function generateBrief(input: BriefInput): Promise<BriefResult> {
       system: buildSystemPrompt(input.aiSettings),
       user: [
         'Write a pre-call brief for the coach about this client.',
-        'A correct but plain draft is included as "deterministicDraft" — improve its clarity and',
+        'A correct but plain draft is included as "deterministicDraft". Improve its clarity and',
         'tone, but do not add any fact, number or claim that is not already present in the data.',
         'Aim for something the coach can absorb in under 30 seconds.',
         '',

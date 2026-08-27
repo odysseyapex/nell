@@ -344,7 +344,7 @@ export async function createExercise(_prev: ActionState, formData: FormData): Pr
     .maybeSingle<{ id: string }>();
 
   if (!framework) {
-    return { error: 'Publish a framework first — an exercise is a framework in use.' };
+    return { error: 'Publish a framework first. An exercise is a framework in use.' };
   }
 
   const { data: exercise, error } = await supabase

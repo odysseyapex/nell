@@ -128,7 +128,7 @@ export function CommitmentForm({ today, tomorrow }: { today: string; tomorrow: s
               aria-label="Confidence that this will happen"
             />
             <p className="text-sm text-muted-foreground">
-              Not how much you want it — how likely it is to actually happen, given the week you
+              Not how much you want it. How likely it is to actually happen, given the week you
               have ahead.
             </p>
           </div>

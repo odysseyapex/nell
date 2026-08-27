@@ -60,7 +60,7 @@ export function CheckinCard({
     return (
       <Card>
         <CardContent className="p-5">
-          <p className="text-sm text-muted-foreground">Recorded — {commitment.commitment_text}</p>
+          <p className="text-sm text-muted-foreground">Recorded: {commitment.commitment_text}</p>
         </CardContent>
       </Card>
     );

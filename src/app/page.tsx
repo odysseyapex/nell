@@ -8,7 +8,7 @@ import { NellviaLogo } from '@/components/shared/logo';
 import { PLANS, PLAN_ORDER, formatPrice } from '@/lib/billing/plans';
 
 const LOOP = [
-  { step: 'Commit', detail: 'The client records what they intend to do — and how confident they are.' },
+  { step: 'Commit', detail: 'The client records what they intend to do, and how confident they are.' },
   { step: 'Live', detail: 'Life happens. Nellvia stays out of the way.' },
   { step: 'Check in', detail: 'Thirty seconds: what happened, and what influenced it.' },
   { step: 'Compare', detail: 'Intention against outcome. This gap is the product.' },
@@ -112,7 +112,7 @@ export default function LandingPage() {
                   <p className="mt-4 metric-value">64%</p>
                   <p className="metric-label mt-1">30-day follow-through</p>
                   <p className="mt-4 text-sm text-muted-foreground">
-                    Average predicted confidence 91% against 64% actual — plans may be larger than
+                    Average predicted confidence 91% against 64% actual. Plans may be larger than
                     they look when they are made.
                   </p>
                 </div>
@@ -138,7 +138,7 @@ export default function LandingPage() {
             <p className="mt-3 max-w-2xl text-muted-foreground">
               A commitment is recorded <em>before</em> the behaviour, with a predicted confidence.
               What actually happened is recorded after, with a structured reason. Nellvia never
-              collapses those into a single done/not-done flag — the distance between them is the
+              collapses those into a single done/not-done flag. The distance between them is the
               entire signal.
             </p>
             <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

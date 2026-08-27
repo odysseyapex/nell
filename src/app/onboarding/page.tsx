@@ -42,7 +42,7 @@ const STEP_META: Record<OnboardingStep, { title: string; blurb: string }> = {
   },
   exercise: {
     title: 'Your first exercise',
-    blurb: 'A framework in use — what your clients are actually asked to do.',
+    blurb: 'A framework in use: what your clients are actually asked to do.',
   },
   reasons: {
     title: 'Reasons',
@@ -208,7 +208,7 @@ export default async function OnboardingPage({
                 <p className="text-sm text-muted-foreground">
                   Your client gets a private link, chooses a password, and is assigned your active
                   exercises immediately. Nellvia needs roughly two weeks of their check-ins before
-                  patterns become readable — until then it will say so rather than guess.
+                  patterns become readable. Until then it will say so rather than guess.
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <InviteClientDialog

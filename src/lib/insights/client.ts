@@ -97,7 +97,7 @@ function summaryCard(metrics: ClientMetrics, facts: CommitmentFact[]): ClientIns
     title: `You completed ${window.completed} of ${window.eligible} commitments ${label}.`,
     summary:
       window.changed > 0
-        ? `${window.changed} changed along the way, which is information too — what changed is usually more useful than whether it changed.`
+        ? `${window.changed} changed along the way, which is information too. What changed is usually more useful than whether it changed.`
         : 'Keep recording what happens. Patterns start to show up after about a week.',
     evidence: [`${window.completed} went to plan`, `${window.changed} changed`, `${window.missed} did not happen`],
     suggestion: null,
@@ -139,7 +139,7 @@ function timingCard(facts: CommitmentFact[], minPerSide: number): ClientInsightC
       `Made before 7 PM: ${formatRate(earlyRate.rate)} happened. ` +
       `Made after 7 PM: ${formatRate(lateRate.rate)}. ` +
       (provisional
-        ? 'That is an early signal rather than a settled pattern — it is based on a small number of commitments so far.'
+        ? 'That is an early signal rather than a settled pattern, based on a small number of commitments so far.'
         : 'When you decide seems to matter as much as what you decide.'),
     evidence: [
       `Before 7 PM: ${earlyRate.completed} of ${earlyRate.eligible}`,
@@ -175,7 +175,7 @@ function weekdayCard(facts: CommitmentFact[], minPerSide: number): ClientInsight
     summary:
       `Weekdays: ${formatRate(weekdayRate.rate)} of your commitments happened. ` +
       `Weekends: ${formatRate(weekendRate.rate)}. ` +
-      (provisional ? 'Still an early signal — there are only a few weekend days recorded so far.' : ''),
+      (provisional ? 'Still an early signal. There are only a few weekend days recorded so far.' : ''),
     evidence: [
       `Weekdays: ${weekdayRate.completed} of ${weekdayRate.eligible}`,
       `Weekends: ${weekendRate.completed} of ${weekendRate.eligible}`,
@@ -199,7 +199,7 @@ function reasonCard(facts: CommitmentFact[]): ClientInsightCard | null {
     type: 'reason',
     title: `${top.name} came up in ${top.count} of your last ${nonCompleted.length} changed or missed commitments`,
     summary:
-      `That does not mean ${top.name.toLowerCase()} caused it — it means the two keep showing up together. ` +
+      `That does not mean ${top.name.toLowerCase()} caused it. It means the two keep showing up together. ` +
       'It might be worth planning differently for the days you expect it.',
     evidence: [`${top.name}: ${top.count} times`, `${nonCompleted.length} commitments did not go to plan`],
     suggestion: `Decide now what a smaller version of your commitment looks like on a ${top.name.toLowerCase()} day.`,
@@ -222,7 +222,7 @@ function calibrationCard(facts: CommitmentFact[]): ClientInsightCard | null {
     type: 'calibration',
     title: optimistic
       ? `You rate your commitments around ${formatRate(calibration.predicted)}, and about ${formatRate(calibration.actual)} happen`
-      : `You are doing more than you expect — ${formatRate(calibration.actual)} happen against ${formatRate(calibration.predicted)} predicted`,
+      : `You are doing more than you expect: ${formatRate(calibration.actual)} happen against ${formatRate(calibration.predicted)} predicted`,
     summary: optimistic
       ? 'That gap usually says something about how big the commitment was, not about how much you wanted it.'
       : 'Your sense of what is realistic may be more cautious than it needs to be.',
@@ -309,7 +309,7 @@ function behaviourModelCard(facts: CommitmentFact[]): ClientInsightCard | null {
     title: 'What your record suggests about you',
     summary:
       `Across ${overall.eligible} commitments, things go to plan most reliably when ${list}. ` +
-      'None of that is fixed — it is a description of the conditions so far, not a rule about you.',
+      'None of that is fixed. It is a description of the conditions so far, not a rule about you.',
     evidence,
     suggestion: 'Set up the next week so those conditions are true more often than not.',
     provisional: false,

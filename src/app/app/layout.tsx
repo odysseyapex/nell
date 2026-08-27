@@ -39,7 +39,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       {/* Nobody should ever mistake the demo for a real client's record. */}
       {isDemoMode() ? (
         <div className="bg-[hsl(var(--signal-watch))] px-4 py-1.5 text-center text-xs font-medium text-white">
-          Demo workspace — generated data, stored in memory.{' '}
+          Demo workspace: generated data, stored in memory.{' '}
           <a href="/demo" className="underline underline-offset-2">
             Switch person
           </a>

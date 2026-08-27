@@ -7,7 +7,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Nellvia — know which clients need you before they tell you',
+    default: 'Nellvia: know which clients need you before they tell you',
     template: '%s · Nellvia',
   },
   description:

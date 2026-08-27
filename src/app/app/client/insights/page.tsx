@@ -17,13 +17,13 @@ export const dynamic = 'force-dynamic';
 
 const STAGE_NOTE: Record<InsightStage, string> = {
   first_days:
-    'You have only just started. For now this is a count — after about a week there is usually enough to see something.',
+    'You have only just started, so for now this is a count. After about a week there is usually enough to see something.',
   early_patterns:
     'Early days. Anything below is a first signal rather than a settled pattern, and it may change.',
   context:
     'There is enough here to see what tends to be going on around the commitments that do not go to plan.',
   behaviour_model:
-    'A month in, this is a description of the conditions that have worked for you so far — not a rule about who you are.',
+    'A month in, this is a description of the conditions that have worked for you so far. It is not a rule about who you are.',
 };
 
 /**
@@ -96,7 +96,7 @@ export default async function ClientInsightsPage() {
       {result.cards.length === 0 ? (
         <EmptyState
           title="Nothing to report yet"
-          description="Nellvia waits until there is enough recorded to say something worth reading. Keep going — a week of check-ins is usually the point where it can start."
+          description="Nellvia waits until there is enough recorded to say something worth reading. Keep going. A week of check-ins is usually the point where it can start."
         />
       ) : (
         <section className="space-y-4">
@@ -156,10 +156,10 @@ export default async function ClientInsightsPage() {
                       <span className="tabular">{formatRate(experiment.baseline_metric)}</span> to{' '}
                       <span className="tabular font-medium">{formatRate(experiment.result_metric)}</span>
                       {moved > 0.02
-                        ? ' — worth keeping.'
+                        ? '. Worth keeping.'
                         : moved < -0.02
-                          ? ' — that one did not help, which is still useful to know.'
-                          : ' — about the same either way.'}
+                          ? '. That one did not help, which is still useful to know.'
+                          : '. About the same either way.'}
                     </p>
                   ) : (
                     <p className="mt-3 text-sm text-muted-foreground">

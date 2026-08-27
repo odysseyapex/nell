@@ -192,7 +192,7 @@ export default async function AdminPage() {
                   (event, index) => (
                     <li key={`${event.created_at}-${index}`} className="flex justify-between gap-4">
                       <span>
-                        {event.feature} — {event.error_code ?? 'unknown'}
+                        {event.feature}: {event.error_code ?? 'unknown'}
                       </span>
                       <span className="text-muted-foreground">
                         {new Date(event.created_at).toLocaleString()}

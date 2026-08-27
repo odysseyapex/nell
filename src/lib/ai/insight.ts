@@ -46,7 +46,7 @@ export async function explainPattern(
       system: buildSystemPrompt(context.aiSettings),
       user: [
         `Explain this detected pattern to the coach in the organization's voice.`,
-        'The confidence value and every figure are already decided — echo them exactly.',
+        'The confidence value and every figure are already decided, so echo them exactly.',
         'Do not introduce a cause. Do not add evidence that is not listed.',
         '',
         evidenceBlock('Pattern', {

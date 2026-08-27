@@ -306,7 +306,7 @@ export function ExerciseStep({ redirectTo }: { redirectTo?: string }) {
         <div>
           <Label htmlFor="prompts">End with a commitment</Label>
           <p className="mt-1 text-sm text-muted-foreground">
-            Strongly recommended. The commitment is what Nellvia measures against — a reflection with
+            Strongly recommended. The commitment is what Nellvia measures against. A reflection with
             no commitment produces no follow-through data.
           </p>
         </div>

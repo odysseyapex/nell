@@ -200,7 +200,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
                       {metrics.calibration.gap !== null && metrics.calibration.gap >= 0.15
                         ? 'Plans may be consistently more ambitious than they appear when they are created.'
                         : metrics.calibration.gap !== null && metrics.calibration.gap <= -0.15
-                          ? 'Outcomes are running ahead of predictions — there may be room for more ambition.'
+                          ? 'Outcomes are running ahead of predictions, so there may be room for more ambition.'
                           : 'Predictions are tracking outcomes closely.'}
                     </p>
                   </div>
@@ -522,8 +522,8 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
                 }))}
               />
               <p className="mt-4 text-sm text-muted-foreground">
-                {metrics.commitmentsCreated30} commitments created in the last 30 days —
-                about {metrics.commitmentCreationRatePerWeek} a week.
+                {metrics.commitmentsCreated30} commitments created in the last 30 days, about{' '}
+                {metrics.commitmentCreationRatePerWeek} a week.
               </p>
             </CardContent>
           </Card>

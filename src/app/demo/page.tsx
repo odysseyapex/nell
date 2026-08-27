@@ -42,7 +42,7 @@ export default async function DemoPage() {
       </div>
       <p className="mt-3 text-muted-foreground">
         Claire Coaching, with 90 days of generated history for four clients. The metrics, patterns,
-        alerts and risk levels you see are produced by the real engines reading this data — only
+        alerts and risk levels you see are produced by the real engines reading this data. Only
         the storage is in memory.
       </p>
 
@@ -67,7 +67,7 @@ export default async function DemoPage() {
 
       <div className="evidence mt-8">
         Start with Claire to see the coach dashboard, then switch to a client to see the same data
-        from their side — and to confirm they cannot reach the coach&apos;s screens.
+        from their side, and to confirm they cannot reach the coach&apos;s screens.
       </div>
 
       <p className="mt-6 text-sm">

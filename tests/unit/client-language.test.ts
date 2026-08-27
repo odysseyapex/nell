@@ -88,6 +88,22 @@ describe('generated client copy', () => {
     expect(copy).not.toMatch(/\bthe client\b|\bthis client\b/);
   });
 
+  it('writes plainly, with no em dashes or marketing tics', () => {
+    const TICS = ['delve', 'seamless', 'leverage', 'robust', 'elevate', 'unlock', 'empower'];
+
+    for (const scenario of scenarios()) {
+      const result = buildClientInsights(scenario.facts, { referenceDate: scenario.referenceDate });
+      const copy = result.cards
+        .flatMap((card) => [card.title, card.summary, card.suggestion ?? '', ...card.evidence])
+        .join(' ');
+
+      expect(copy, `em dash in the "${scenario.name}" scenario`).not.toContain('—');
+      for (const tic of TICS) {
+        expect(copy.toLowerCase(), `"${tic}" in the "${scenario.name}" scenario`).not.toContain(tic);
+      }
+    }
+  });
+
   it('hedges every provisional card and states nothing flatly on thin data', () => {
     const result = buildClientInsights(scenarios()[2].facts, { referenceDate: '2026-08-30' });
     for (const card of result.cards.filter((c) => c.provisional)) {
@@ -131,14 +147,18 @@ describe('client-facing source files', () => {
    * paths and component names are code — `<Badge>` is a UI primitive, not
    * gamification, and flagging it would train us to weaken the guard.
    */
-  function visibleCopy(line: string): string {
-    if (/^\s*import\b/.test(line)) return '';
-    if (line.includes('console.')) return '';
+  function visibleParts(line: string): string[] {
+    if (/^\s*import\b/.test(line)) return [];
+    if (line.includes('console.')) return [];
 
     const parts: string[] = [];
     for (const match of line.matchAll(/(['"`])((?:\\.|(?!\1).)*)\1/g)) parts.push(match[2]);
     for (const match of line.matchAll(/>([^<>{}]+)</g)) parts.push(match[1]);
-    return parts.join(' ').toLowerCase();
+    return parts;
+  }
+
+  function visibleCopy(line: string): string {
+    return visibleParts(line).join(' ').toLowerCase();
   }
 
   it('contain no banned language in user-visible copy', () => {
@@ -164,5 +184,22 @@ describe('client-facing source files', () => {
     expect(visibleCopy('  const label = "compliance score";')).toContain('compliance');
     // …and still ignores code.
     expect(visibleCopy("import { Badge } from '@/components/ui/badge';")).toBe('');
+  });
+
+  it('contains no em dashes in prose, only as an empty-value marker', () => {
+    const files = roots.flatMap(collect);
+    for (const file of files) {
+      readFileSync(file, 'utf8')
+        .split('\n')
+        .forEach((line, index) => {
+          for (const part of visibleParts(line)) {
+            // A lone dash is the conventional "no value here" marker in a
+            // table cell or an empty slider. Anything longer is prose, and
+            // prose should not use them.
+            if (part.trim() === '—') continue;
+            expect(part, `${file}:${index + 1} uses an em dash in prose`).not.toContain('—');
+          }
+        });
+    }
   });
 });

@@ -23,7 +23,7 @@ export function clientInvitationEmail(params: {
       organizationName: params.organizationName,
       heading: `Hi ${params.clientFirstName},`,
       body: `
-        <p>${params.coachName} uses Nellvia to keep track of what you commit to between sessions — and, more usefully, what actually happens afterwards.</p>
+        <p>${params.coachName} uses Nellvia to keep track of what you commit to between sessions, and more usefully what actually happens afterwards.</p>
         ${welcome}
         <p>It takes about thirty seconds a day. You record what you are committing to, and later you say what happened and what influenced it. Over time, Nellvia shows you the conditions under which things go well for you.</p>
         <p>This link is unique to you and expires in 14 days.</p>`,
@@ -56,7 +56,7 @@ export function coachWelcomeEmail(params: {
       body: `
         <p>${params.organizationName} is set up. Here is the shortest path to something useful:</p>
         <ol>
-          <li>Build your framework — the questions you already ask, as structured steps.</li>
+          <li>Build your framework: the questions you already ask, as structured steps.</li>
           <li>Create one exercise from it.</li>
           <li>Invite one client.</li>
         </ol>
@@ -92,7 +92,7 @@ export function checkinReminderEmail(params: {
       body: `
         <p>On ${params.commitmentDate} you committed to:</p>
         <p style="background:#f1f5f9;padding:16px;border-radius:8px;font-weight:600;">${params.commitmentText}</p>
-        <p>What happened? There is no wrong answer here — the useful part is what influenced it.</p>`,
+        <p>What happened? There is no wrong answer here. The useful part is what influenced it.</p>`,
       ctaLabel: 'Check in',
       ctaUrl: url,
     }),
@@ -188,7 +188,7 @@ export function weeklyClientEmail(params: {
           params.followThrough7,
         )}).</p>
         ${reason}
-        <p>Not a score — just what the record shows. The interesting question is what made the difference.</p>`,
+        <p>Not a score, just what the record shows. The interesting question is what made the difference.</p>`,
       ctaLabel: 'Open Nellvia',
       ctaUrl: appUrl('/app/client'),
     }),
