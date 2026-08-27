@@ -253,9 +253,10 @@ class DemoQuery<T = Row[]> implements PromiseLike<Result<T>> {
             const target = (this.tables[relation.table] ?? []).find(
               (candidate) => candidate.id === row[relation.localKey],
             );
-            projected[alias] = target ? [target] : [];
+            // A to-one embed resolves to the row itself, matching PostgREST.
+            projected[alias] = target ?? null;
           } else {
-            projected[alias] = [];
+            projected[alias] = null;
           }
           continue;
         }

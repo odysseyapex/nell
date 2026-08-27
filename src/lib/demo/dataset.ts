@@ -128,11 +128,14 @@ const CLIENTS: ClientSpec[] = [
           text: pick(random, texts),
         };
       }
-      const reason = veryRecent
-        ? random() < 0.72
+      // Her story is a stressful month at work, so stress dominates the recent
+      // window and is absent from the older one. That contrast is what the
+      // 30-day reason rule is meant to catch.
+      const reason = recent
+        ? random() < 0.68
           ? 'stress'
           : pick(random, ['time', 'low-energy', 'schedule-change'])
-        : pick(random, ['time', 'forgot', 'social-situation', 'stress', 'low-energy']);
+        : pick(random, ['time', 'forgot', 'social-situation', 'low-energy']);
 
       return {
         outcome: random() < 0.55 ? 'missed' : 'changed_impulsively',
@@ -365,7 +368,7 @@ function build(): Tables {
     exercise_entries: [],
     exercise_responses: [],
     reason_codes: REASONS.map((reason, index) => ({
-      id: id(id(`reason-${reason.slug}`)),
+      id: id(`reason-${reason.slug}`),
       organization_id: ORG_ID,
       name: reason.name,
       slug: reason.slug,

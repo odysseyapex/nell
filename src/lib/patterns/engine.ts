@@ -208,11 +208,20 @@ export function detectWeekdayDip(facts: CommitmentFact[]): PatternCandidate | nu
   };
 }
 
-export function detectReasonDominance(facts: CommitmentFact[]): PatternCandidate | null {
-  const nonCompleted = facts.filter((f) => isResolved(f) && f.status !== 'completed');
+export function detectReasonDominance(
+  facts: CommitmentFact[],
+  referenceDate?: IsoDate,
+): PatternCandidate | null {
+  // Prefer the last 30 days. A reason that dominated two months ago and has
+  // since faded is history, and averaging it in hides a recent shift.
+  const recent = referenceDate ? inWindow(facts, lastNDays(referenceDate, 30)) : facts;
+  const recentNonCompleted = recent.filter((f) => isResolved(f) && f.status !== 'completed');
+  const scoped = recentNonCompleted.length >= THRESHOLDS.reasonMinNonCompleted ? recent : facts;
+
+  const nonCompleted = scoped.filter((f) => isResolved(f) && f.status !== 'completed');
   if (nonCompleted.length < THRESHOLDS.reasonMinNonCompleted) return null;
 
-  const [top] = tallyReasons(facts);
+  const [top] = tallyReasons(scoped);
   if (!top) return null;
   if (top.count < THRESHOLDS.reasonMinOccurrences || top.share < THRESHOLDS.reasonShare) return null;
 
@@ -511,7 +520,7 @@ export function detectPatterns(
     detectDecline(facts, options.referenceDate),
     detectWeekendDip(scoped),
     detectWeekdayDip(scoped),
-    detectReasonDominance(scoped),
+    detectReasonDominance(scoped, options.referenceDate),
     detectEmotionalCluster(scoped),
     detectOverconfidence(scoped),
     detectLatePlanning(scoped),

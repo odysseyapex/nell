@@ -18,6 +18,8 @@
 
 import {
   type ClientMetrics,
+  inWindow,
+  lastNDays,
   computeCalibration,
   computeClientMetrics,
   followThroughOf,
@@ -187,17 +189,30 @@ function weekdayCard(facts: CommitmentFact[], minPerSide: number): ClientInsight
   };
 }
 
-function reasonCard(facts: CommitmentFact[]): ClientInsightCard | null {
-  const nonCompleted = facts.filter((f) => isResolved(f) && f.status !== 'completed');
+/**
+ * What keeps showing up when plans change.
+ *
+ * Scoped to the last 30 days where possible. A reason that dominated two
+ * months ago and has since faded is history, not something to act on, and
+ * averaging it into today's picture is how an insight becomes wallpaper.
+ */
+function reasonCard(facts: CommitmentFact[], referenceDate: IsoDate): ClientInsightCard | null {
+  const recent = inWindow(facts, lastNDays(referenceDate, 30));
+  const recentNonCompleted = recent.filter((f) => isResolved(f) && f.status !== 'completed');
+
+  const scoped = recentNonCompleted.length >= 5 ? recent : facts;
+  const windowLabel = recentNonCompleted.length >= 5 ? 'in the last 30 days' : 'so far';
+
+  const nonCompleted = scoped.filter((f) => isResolved(f) && f.status !== 'completed');
   if (nonCompleted.length < 4) return null;
 
-  const [top] = tallyReasons(facts);
+  const [top] = tallyReasons(scoped);
   if (!top || top.count < 3 || top.share < 0.35) return null;
 
   return {
     key: `reason:${top.slug}`,
     type: 'reason',
-    title: `${top.name} came up in ${top.count} of your last ${nonCompleted.length} changed or missed commitments`,
+    title: `${top.name} came up in ${top.count} of the ${nonCompleted.length} commitments that changed or did not happen ${windowLabel}`,
     summary:
       `That does not mean ${top.name.toLowerCase()} caused it. It means the two keep showing up together. ` +
       'It might be worth planning differently for the days you expect it.',
@@ -352,7 +367,7 @@ export function buildClientInsights(
     const weekend = weekdayCard(facts, 5);
     if (weekend) cards.push(weekend);
 
-    const reason = reasonCard(facts);
+    const reason = reasonCard(facts, referenceDate);
     if (reason) cards.push(reason);
 
     const calibration = calibrationCard(facts);

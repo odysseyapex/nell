@@ -98,6 +98,54 @@ describe('the first month', () => {
     expect(reason!.suggestion).toBeTruthy();
   });
 
+  it('describes what has been going on lately, not an average over months', () => {
+    const facts = [
+      // Two months ago: a different reason entirely, and plenty of it.
+      ...Array.from({ length: 12 }, (_, i) =>
+        fact({
+          date: `2026-06-${String(i + 1).padStart(2, '0')}`,
+          outcome: 'missed',
+          reason: { slug: 'forgot', name: 'Forgot', category: 'cognitive' },
+        }),
+      ),
+      // The last month: stress, repeatedly.
+      ...Array.from({ length: 8 }, (_, i) =>
+        fact({
+          date: `2026-08-${String(i + 10).padStart(2, '0')}`,
+          outcome: 'missed',
+          reason: { slug: 'stress', name: 'Stress', category: 'emotional' },
+        }),
+      ),
+    ];
+
+    const reason = buildClientInsights(facts, { referenceDate }).cards.find(
+      (card) => card.type === 'reason',
+    );
+
+    expect(reason).toBeDefined();
+    // Averaged over 90 days "Forgot" is the bigger number, but it is history.
+    expect(reason!.title).toContain('Stress');
+    expect(reason!.title).toContain('in the last 30 days');
+  });
+
+  it('falls back to the wider window when the recent one is too thin', () => {
+    const facts = Array.from({ length: 6 }, (_, i) =>
+      fact({
+        date: `2026-06-${String(i + 1).padStart(2, '0')}`,
+        outcome: 'missed',
+        reason: { slug: 'forgot', name: 'Forgot', category: 'cognitive' },
+      }),
+    );
+
+    const reason = buildClientInsights(facts, { referenceDate }).cards.find(
+      (card) => card.type === 'reason',
+    );
+
+    expect(reason).toBeDefined();
+    expect(reason!.title).toContain('Forgot');
+    expect(reason!.title).toContain('so far');
+  });
+
   it('reports the confidence gap using both actual figures', () => {
     const facts = [
       ...series('2026-08-05', 6, ['missed'], { confidence: 90, createdHour: 9 }),
